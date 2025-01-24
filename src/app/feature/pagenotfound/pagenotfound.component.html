@@ -1,1 +1,10 @@
-<p>pagenotfound works!</p>
+<ng-container *transloco="let t">
+    <h2>
+        <span>{{ t('noFoundPage.noFoundTitle') }}</span>
+    </h2>
+    <h3>{{ t('noFoundPage.noFoundSubTitle') }}</h3>
+    <p>{{ t('noFoundPage.noFoundDescription') }}</p>
+    <button type="button" [routerLink]="['/']">
+        {{ t('noFoundPage.buttonBack') }}
+    </button>
+</ng-container>

@@ -1,1 +1,8 @@
-<p>notautorized works!</p>
+<ng-container *transloco="let t">
+    <h2>
+        <span>{{ t('notAuthorizedPage.notAuthorizedTitle') }}</span>
+    </h2>
+    <button type="button" [routerLink]="['/']">
+        {{ t('notAuthorizedPage.buttonBack') }}
+    </button>
+</ng-container>
