@@ -1,0 +1,108 @@
+{
+    "menu": {
+        "login": "Connexion",
+        "logout": "Déconnexion",
+        "home": "Acceuil",
+        "project": "Projets",
+        "profile": "Profil",
+        "contact": "Contact",
+        "about": "A propos",
+        "add": "Ajouter",
+        "update": "Modifier",
+        "cancel": "Annuler"
+    },
+    "alertMessage": {
+        "errorEmail": "Veuillez saisir un email valide.",
+        "errorCharacters": "Le mot de passe doit comporter au moins 6 caractères.",
+        "errorLogin": "Erreur, veuillez réessayer",
+        "errorCredentials": "Identifiants invalides.",
+        "loginSuccess": "Connexion réussie.",
+        "loginError": "Erreur de connexion.",
+        "registerSuccess": "Enregistrer le succès.",
+        "registerError": "Erreur d'enregistrement.",
+        "messageDeleteSuccess": "Projet supprimé avec succès !",
+        "messageDeleteError": "Échec de la suppression du projet. Veuillez réessayer.",
+        "messageAddSuccess": "Projet ajouter avec succès !",
+        "messageAddError": "Échec de l'ajout du projet. Veuillez réessayer.",
+        "messageEditSuccess": "Projet modifier avec succès !",
+        "messageEditError": "Échec de la modification du projet. Veuillez réessayer.",
+        "messageRequiredFields": "Veuillez remplir tous les champs obligatoires"
+    },
+    "loginPage": {
+        "title": "Page de connexion",
+        "email": "Votre e-mail",
+        "password": "Mot de passe",
+        "buttonValidation": "Connexion",
+        "buttonBack": "Revenir à la page d'acceuil",
+        "backRegister": "Vous n'avez pas de compte ?",
+        "buttonRegister": "Créer un compte",
+        "registerNameRequired": "Le nom est obligatoire.",
+        "registerEmailRequired": "Veuillez saisir une adresse e-mail valide.",
+        "registerConfirmPasswordRequired": "Un mot de passe de confirmation est requis."
+    },
+    "registerPage": {
+        "name": "Nom",
+        "title": "Création de compte",
+        "email": "Votre e-mail",
+        "password": "Mot de passe",
+        "confirmPassword": "Confirmer mot de passe",
+        "buttonValidation": "S'enregister",
+        "buttonBack": "Revenir à la page d'acceuil",
+        "backLogin": "Déjà un compte ?",
+        "buttonLogin": "Se connecter"
+    },
+    "homePage": {
+        "title": "Bienvenue dans MockAPI",
+        "subTitle": "Présentation",
+        "description": "Le but est de presenter une application en Angular qui utilise cette API RESTFul : https://mock-api.binaryboxtuts.com/",
+        "helpButton": "Aide"
+    },
+    "projectPage": {
+        "title": "Liste des projets",
+        "description": "Voici la liste des projets",
+        "nameProject": "Nom",
+        "descriptionProject": "Description",
+        "actionButtonTitle": "Action",
+        "buttonAdd": "Ajouter un projet",
+        "buttonEdit": "Modifier un projet",
+        "buttondelete": "Supprimer un projet"
+    },
+    "addProjectPage": {
+        "title": "Ajouter un projet",
+        "nameProject": "Nom",
+        "description": "Description du projet",
+        "buttonAdd": "Ajouter",
+        "buttonCancel": "Annuler"
+    },
+    "editProjectPage": {
+        "title": "Modifier un projet",
+        "nameProject": "Nom",
+        "description": "Description du projet",
+        "buttonAdd": "Modifier",
+        "buttonCancel": "Annuler"
+    },
+    "profilePage": {
+        "title": "Page profil",
+        "profilName": "Nom du profil",
+        "profilEmail": "Votre E-mail"
+    },
+    "noFoundPage": {
+        "noFoundTitle": "404",
+        "noFoundSubTitle": "Oups ! Vous êtes perdu.",
+        "noFoundDescription": "La page que vous recherchez n'a pas été trouvée.",
+        "buttonBack": "Revenir à la page d'accueil"
+    },
+    "notAuthorizedPage": {
+        "notAuthorizedTitle": "Vous n'êtes pas autorisé à accéder à cette page.",
+        "buttonBack": "Revenir à la page d'accueil"
+    },
+    "aboutPage": {
+        "title": "A propos",
+        "description1": "Framework open source, basé sur TypeScript",
+        "description2": "Bootstrap est un framework CSS open source",
+        "description3": "Ajout des paquets suivants : angular-datatables, transloco, jwt-decode"
+    },
+    "footer": {
+        "footerDescription": ""
+    }
+}

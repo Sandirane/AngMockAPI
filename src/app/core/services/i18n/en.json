@@ -1,0 +1,108 @@
+{
+    "menu": {
+        "login": "Login",
+        "logout": "Logout",
+        "home": "Home",
+        "project": "Project",
+        "profile": "Profile",
+        "contact": "Contact",
+        "about": "About",
+        "add": "Add",
+        "update": "Update",
+        "cancel": "Cancel"
+    },
+    "alertMessage": {
+        "errorEmail": "Please enter a valid email.",
+        "errorCharacters": "Password must be at least 6 characters.",
+        "errorLogin": "Error, please retry",
+        "errorCredentials": "Invalid credentials.",
+        "loginSuccess": "Login success.",
+        "loginError": "Login error.",
+        "registerSuccess": "Register success.",
+        "registerError": "Register error.",
+        "registerNameRequired": "Name is required.",
+        "registerEmailRequired": "Please enter a valid email.",
+        "registerConfirmPasswordRequired": "Confirmation password is required.",
+        "messageDeleteSuccess": "Project deleted successfully!",
+        "messageDeleteError": "Failed to delete the project. Please try again.",
+        "messageAddSuccess": "Project added successfully!",
+        "messageAddError": "Failed to add project. Please try again.",
+        "messageEditSuccess": "Project edit successfully!",
+        "messageEditError": "Project edit failed. Please try again.",
+        "messageRequiredFields": "Please fill in all required fields."
+    },
+    "loginPage": {
+        "title": "Login page",
+        "email": "Email",
+        "password": "Password",
+        "buttonValidation": "Sign in",
+        "buttonBack": "Go back page Home",
+        "backRegister": "Don't have an account?",
+        "buttonRegister": "Register here"
+    },
+    "registerPage": {
+        "name": "Name",
+        "title": "Register page",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "buttonValidation": "Register now",
+        "buttonBack": "Go back page Home",
+        "backLogin": "Already an account?",
+        "buttonLogin": "Sign in"
+    },
+    "homePage": {
+        "title": "Welcome to MockAPI",
+        "subTitle": "Presentation",
+        "description": "The goal is to present an Angular application that uses a RESTFul API: https://mock-api.binaryboxtuts.com/",
+        "helpButton": "Help!"
+    },
+    "projectPage": {
+        "title": "List of project",
+        "description": "Projects",
+        "nameProject": "Name",
+        "descriptionProject": "Description",
+        "actionButtonTitle": "Action",
+        "buttonAdd": "Add project",
+        "buttonEdit": "Edit project",
+        "buttondelete": "Delete project"
+    },
+    "addProjectPage": {
+        "title": "Add project",
+        "nameProject": "Name",
+        "description": "Project description",
+        "buttonAdd": "Add",
+        "buttonCancel": "Cancel"
+    },
+    "editProjectPage": {
+        "title": "Edit project",
+        "nameProject": "Name",
+        "description": "Project description",
+        "buttonAdd": "Edit",
+        "buttonCancel": "Cancel"
+    },
+    "profilePage": {
+        "title": "Profile Page",
+        "profilName": "Name",
+        "profilEmail": "Email"
+    },
+    "noFoundPage": {
+        "noFoundTitle": "404",
+        "noFoundSubTitle": "Oops! You're lost.",
+        "noFoundDescription": "The page you are looking for was not found.",
+        "buttonBack": "Go back page Home"
+    },
+    "notAuthorizedPage": {
+        "notAuthorizedTitle": "You are not authorized.",
+        "buttonBack": "Go back page Home"
+    },
+    "aboutPage": {
+        "title": "About",
+        "description1": "Open source framework, based on TypeScript",
+        "description2": "Bootstrap is an open source CSS framework",
+        "description3": "Added the following packages: angular-datatables, transloco, jwt-decode"
+    },
+    "footer": {
+        "footerDescription": ""
+    }
+}
