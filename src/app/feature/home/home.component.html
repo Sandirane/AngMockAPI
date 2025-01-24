@@ -1,1 +1,14 @@
-<p>home works!</p>
+<ng-container *transloco="let t">
+
+    <h1>{{ t('homePage.title') }}</h1>
+
+    <div>
+        <div><img src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="img"></div>
+        <div>
+            <h1>{{ t('homePage.subTitle') }}</h1>
+            <p> {{ t('homePage.description') }}</p>
+            <a>{{ t('homePage.helpButton') }}</a>
+        </div>
+    </div>
+
+</ng-container>
