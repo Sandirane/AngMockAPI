@@ -1,1 +1,52 @@
-<p>register works!</p>
+<ng-container *transloco="let t">
+
+    <app-alert [showAlert]="showAlert" [alertClass]="alertClassRegister" [alertMessage]="alertMessageRegister | transloco" />
+
+    <p>{{ t('registerPage.title') }}</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <label for="name">{{ t('registerPage.name') }}</label> <br />
+        <input formControlName="name" type="text" id="name" /> <br /> <br />
+
+        @if(registerForm.get('name')?.invalid && registerForm.get('name')?.touched){
+        <div>
+            {{ t('alertMessage.registerNameRequired') }}
+        </div>
+        }
+
+        <label for="email">{{ t('registerPage.email') }}</label> <br />
+        <input formControlName="email" type="email" id="email" /> <br /> <br />
+
+        @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched){
+        <div>
+            {{ t('alertMessage.registerEmailRequired') }}
+        </div>
+        }
+
+        <label for="password">{{ t('registerPage.password') }}</label> <br />
+        <input formControlName="password" type="password" id="password" /> <br /> <br />
+
+        @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched){
+        <div>
+            {{ t('alertMessage.errorCharacters') }}
+        </div>
+        }
+
+        <label for="confirm-password">{{ t('registerPage.confirmPassword') }}</label> <br />
+        <input formControlName="confirmPassword" type="password" id="confirm-password" /> <br /> <br />
+
+        @if(registerForm.get('confirmPassword')?.invalid &&
+        registerForm.get('confirmPassword')?.touched){
+        <div>
+            {{ t('alertMessage.registerConfirmPasswordRequired') }}
+        </div>
+        }
+
+        <button type="submit" [disabled]="registerForm.invalid">
+            {{ t('registerPage.buttonValidation') }}
+        </button>
+        <p>{{ t('registerPage.backLogin') }} <a routerLink="/auth/login">{{ t('registerPage.buttonLogin') }}</a></p>
+
+    </form>
+</ng-container>

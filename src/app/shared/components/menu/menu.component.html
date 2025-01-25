@@ -5,6 +5,8 @@
                 {{ t('menu.home') }}
             </button>
 
+            @if(isAuthenticated$ | async) {
+
             <button type="button" routerLink="/admin/projects">
                 {{ t('menu.project') }}
             </button>
@@ -12,9 +14,15 @@
             <button type="button" routerLink="/admin/profile">
                 {{ t('menu.profile') }}
             </button>
+
+            <button type="button" (click)="logout()">
+                {{ t('menu.logout') }}
+            </button>
+            } @else {
             <button type="button" routerLink="/auth/login">
                 {{ t('menu.login') }}
             </button>
+            }
         </li>
 
         <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">

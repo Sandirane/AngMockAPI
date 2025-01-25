@@ -3,8 +3,10 @@ import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
 import { I18nService } from '@core/services/i18n.service';
 import { TranslocoDirective } from '@ngneat/transloco';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -17,6 +19,14 @@ export class MenuComponent {
   private router = inject(Router);
   private fb = inject(NonNullableFormBuilder);
   private i18nService = inject(I18nService);
+  private authService = inject(AuthService);
+
+  isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$();
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/auth/login']);
+  }
 
   availableLangs = this.i18nService.availableLangs;
   langCtrl = this.fb.control(this.i18nService.lang);
