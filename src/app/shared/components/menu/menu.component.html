@@ -1,1 +1,27 @@
-<p>menu works!</p>
+<ng-container *transloco="let t">
+    <ul>
+        <li>
+            <button type="button" routerLink="/">
+                {{ t('menu.home') }}
+            </button>
+
+            <button type="button" routerLink="/admin/projects">
+                {{ t('menu.project') }}
+            </button>
+
+            <button type="button" routerLink="/admin/profile">
+                {{ t('menu.profile') }}
+            </button>
+            <button type="button" routerLink="/auth/login">
+                {{ t('menu.login') }}
+            </button>
+        </li>
+
+        <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
+            @for (lang of availableLangs; track lang) {
+            <option [value]="lang">{{ lang }}</option>
+            }
+        </select>
+
+    </ul>
+</ng-container>
