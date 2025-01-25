@@ -2,9 +2,10 @@ import { ApplicationConfig, Injectable, isDevMode, LOCALE_ID, provideZoneChangeD
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { I18nService } from '@core/services/i18n.service';
 import { TranslocoLoader, Translation, provideTransloco } from '@ngneat/transloco';
+import { authInterceptor } from '@core/interceptor/auth.interceptor';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoModuleLoader implements TranslocoLoader {
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideTransloco({
       config: {
         availableLangs: [...i18nService.availableLangs],

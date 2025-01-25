@@ -9,7 +9,8 @@
         "about": "About",
         "add": "Add",
         "update": "Update",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "language":"language"
     },
     "alertMessage": {
         "errorEmail": "Please enter a valid email.",
