@@ -1,1 +1,10 @@
-<p>profile works!</p>
+<ng-container *transloco="let t">
+    <h1>{{ t('profilePage.title') }}</h1>
+
+    @if(user) {
+
+    <h5>{{ t('profilePage.profilName') }} : {{ user.name }}</h5>
+    <span>{{ t('profilePage.profilEmail') }}  : {{ user.email }}</span>
+
+    }
+</ng-container>

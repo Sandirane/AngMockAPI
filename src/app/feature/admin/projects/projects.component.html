@@ -1,1 +1,36 @@
-<p>projects works!</p>
+<ng-container *transloco="let t">
+
+    <h1>{{ t('projectPage.title') }}</h1>
+
+    @if(isLoading) {
+
+    Loading...
+
+    } @else {
+
+    @for (project of projects; track project.id) {
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>{{ t('projectPage.nameProject') }}</th>
+            <th>{{ t('projectPage.descriptionProject') }}</th>
+            <th>{{ t('projectPage.actionButtonTitle') }}</th>
+        </tr>
+        <tr>
+            <td>{{ project.id }}</td>
+            <td>{{ project.name }}</td>
+            <td>{{ project.description }}</td>
+            <td>
+                <button>
+                    {{ t('projectPage.buttonEdit') }}
+                </button> |
+                <button>
+                    {{ t('projectPage.buttondelete') }}
+                </button>
+            </td>
+        </tr>
+    </table>
+    }
+    }
+</ng-container>
