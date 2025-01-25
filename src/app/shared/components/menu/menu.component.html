@@ -1,35 +1,41 @@
 <ng-container *transloco="let t">
+
+    @if(isAuthenticated$ | async) {
+
+    <ul>
+        @for(action of actions; track action) {
+        <li>
+            <button routerLink="{{action.route}}">
+                {{ t(action.title) }}
+            </button>
+        </li>
+        }
+        <li>
+            <button type="button" (click)="logout()">
+                {{ t('menu.logout') }}
+            </button>
+        </li>
+    </ul>
+
+    } @else {
+
     <ul>
         <li>
             <button type="button" routerLink="/">
                 {{ t('menu.home') }}
-            </button>
-
-            @if(isAuthenticated$ | async) {
-
-            <button type="button" routerLink="/admin/projects">
-                {{ t('menu.project') }}
-            </button>
-
-            <button type="button" routerLink="/admin/profile">
-                {{ t('menu.profile') }}
-            </button>
-
-            <button type="button" (click)="logout()">
-                {{ t('menu.logout') }}
-            </button>
-            } @else {
+            </button> 
             <button type="button" routerLink="/auth/login">
                 {{ t('menu.login') }}
             </button>
-            }
         </li>
-
-        <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
-            @for (lang of availableLangs; track lang) {
-            <option [value]="lang">{{ lang }}</option>
-            }
-        </select>
-
     </ul>
+
+    }
+
+    <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
+        @for (lang of availableLangs; track lang) {
+        <option [value]="lang">{{ lang }}</option>
+        }
+    </select>
+
 </ng-container>

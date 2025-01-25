@@ -8,6 +8,11 @@ import { I18nService } from '@core/services/i18n.service';
 import { TranslocoDirective } from '@ngneat/transloco';
 import { Observable } from 'rxjs';
 
+interface Action {
+  title: string;
+  route: string;
+}
+
 @Component({
   selector: 'app-menu',
   imports: [CommonModule, RouterLink, TranslocoDirective, ReactiveFormsModule],
@@ -20,6 +25,12 @@ export class MenuComponent {
   private fb = inject(NonNullableFormBuilder);
   private i18nService = inject(I18nService);
   private authService = inject(AuthService);
+
+  actions: Array<Action> = [
+    { title: "menu.home", "route": "/home" },
+    { title: "menu.project", "route": "admin/projects" },
+    { title: "menu.profile", "route": "admin/profile" },
+  ]
 
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$();
 
