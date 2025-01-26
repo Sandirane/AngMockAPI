@@ -1,6 +1,15 @@
 <ng-container *transloco="let t">
 
+    <app-alert [showAlert]="showAlert" [alertClass]="alertClassDelete"
+        [alertMessage]="alertMessageDelete | transloco" />
+
     <h1>{{ t('projectPage.title') }}</h1>
+
+    <button class="btn btn-outline-primary" [routerLink]="['/admin/add-product']">
+        {{ t('projectPage.buttonAdd') }}
+    </button>
+
+    <br />
 
     @if(isLoading) {
 
@@ -22,10 +31,10 @@
             <td>{{ project.name }}</td>
             <td>{{ project.description }}</td>
             <td>
-                <button>
+                <button [routerLink]="['/admin/project', project.id]">
                     {{ t('projectPage.buttonEdit') }}
                 </button> |
-                <button>
+                <button (click)="deleteSubmit(project.id)">
                     {{ t('projectPage.buttondelete') }}
                 </button>
             </td>
