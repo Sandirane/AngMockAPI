@@ -1,1 +1,21 @@
-<p>edit-projet works!</p>
+<ng-container *transloco="let t">
+
+    <app-alert [showAlert]="showAlert" [alertClass]="alertClassEdit" [alertMessage]="alertMessageEdit | transloco" />
+
+    <h1>{{ t('editProjectPage.title') }}</h1>
+
+    <form [formGroup]="projectFormGroup" (ngSubmit)="editSubmit()">
+
+        <label for="name">{{ t('editProjectPage.nameProject') }}*</label><br />
+        <input type="text" id="name" formControlName="name"><br /><br />
+
+        <label for="description">{{ t('editProjectPage.description') }}*</label><br />
+        <textarea id="description" formControlName="description"></textarea><br /><br />
+
+        <button type="submit" [disabled]="projectFormGroup.invalid">{{ t('editProjectPage.buttonAdd') }}</button> <br />
+        <button type="button" [routerLink]="['/admin/projects']">{{ t('editProjectPage.buttonCancel') }}</button>
+
+
+    </form>
+
+</ng-container>

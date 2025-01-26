@@ -1,1 +1,21 @@
-<p>add-projet works!</p>
+<ng-container *transloco="let t">
+
+    <app-alert [showAlert]="showAlert" [alertClass]="alertClassAdd" [alertMessage]="alertMessageAdd | transloco" />
+
+    <h1>{{ t('addProjectPage.title') }}</h1>
+
+    <form [formGroup]="projectFormGroup" (ngSubmit)="addSubmit()">
+
+        <label for="name">{{ t('addProjectPage.nameProject') }}*</label><br />
+        <input type="text" id="name" formControlName="name"><br /><br />
+
+        <label for="description">{{ t('addProjectPage.description') }}*</label><br />
+        <textarea id="description" formControlName="description"></textarea><br /><br />
+
+        <button type="submit" [disabled]="projectFormGroup.invalid">{{ t('addProjectPage.buttonAdd') }}</button> <br />
+        <button type="button" [routerLink]="['/admin/projects']">{{ t('addProjectPage.buttonCancel') }}</button>
+
+
+    </form>
+
+</ng-container>

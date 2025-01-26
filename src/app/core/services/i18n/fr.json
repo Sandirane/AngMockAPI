@@ -19,7 +19,7 @@
         "errorCredentials": "Identifiants invalides.",
         "loginSuccess": "Connexion réussie.",
         "loginError": "Erreur de connexion.",
-        "registerSuccess": "Enregistrer le succès.",
+        "registerSuccess": "Enregistrement avec succès.",
         "registerError": "Erreur d'enregistrement.",
         "messageDeleteSuccess": "Projet supprimé avec succès !",
         "messageDeleteError": "Échec de la suppression du projet. Veuillez réessayer.",
@@ -27,7 +27,7 @@
         "messageAddError": "Échec de l'ajout du projet. Veuillez réessayer.",
         "messageEditSuccess": "Projet modifier avec succès !",
         "messageEditError": "Échec de la modification du projet. Veuillez réessayer.",
-        "messageRequiredFields": "Veuillez remplir tous les champs obligatoires"
+        "messageRequiredFields": "Veuillez remplir tous les champs obligatoires."
     },
     "loginPage": {
         "title": "Page de connexion",
