@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core'; 
 
 @Component({
   selector: 'app-alert',
@@ -12,5 +12,5 @@ export class AlertComponent {
   @Input() showAlert: boolean = false;
   @Input() alertClass: string = '';
   @Input() alertMessage: string = '';
-  
+ 
 }

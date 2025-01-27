@@ -1,41 +1,63 @@
 <ng-container *transloco="let t">
-
+ 
     @if(isAuthenticated$ | async) {
+    <p-toolbar>
+        <ng-template #start>
+            <div class="flex items-center gap-2">
 
-    <ul>
-        @for(action of actions; track action) {
-        <li>
-            <button routerLink="{{action.route}}">
-                {{ t(action.title) }}
-            </button>
-        </li>
-        }
-        <li>
-            <button type="button" (click)="logout()">
-                {{ t('menu.logout') }}
-            </button>
-        </li>
-    </ul>
+                @for(action of actions; track action) {
+
+                <p-button routerLink="{{action.route}}" severity="contrast" size="small" >
+                    {{ t(action.title) }}
+                </p-button>
+
+                }
+            </div>
+        </ng-template>
+
+        <ng-template #end>
+            <div class="flex items-center gap-2">
+
+                <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
+                    @for (lang of availableLangs; track lang) {
+                    <option [value]="lang">{{ lang }}</option>
+                    }
+                </select>
+
+                <p-button severity="contrast" size="small" type="button" (click)="logout()">
+                    {{ t('menu.logout') }}
+                </p-button>
+            </div>
+        </ng-template>
+ 
+    </p-toolbar>
 
     } @else {
 
-    <ul>
-        <li>
-            <button type="button" routerLink="/">
-                {{ t('menu.home') }}
-            </button> 
-            <button type="button" routerLink="/auth/login">
-                {{ t('menu.login') }}
-            </button>
-        </li>
-    </ul>
+    <p-toolbar >
+        <ng-template #start>
+            <div class="flex items-center gap-2">
+                <p-button severity="contrast" size="small" type="button" routerLink="/">
+                    {{ t('menu.home') }}
+                </p-button>
+
+                <p-button severity="contrast" size="small" type="button" routerLink="/auth/login">
+                    {{ t('menu.login') }}
+                </p-button>
+            </div>
+        </ng-template>
+
+        <ng-template #end>
+            <div class="flex items-center gap-2">
+
+                <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
+                    @for (lang of availableLangs; track lang) {
+                    <option [value]="lang">{{ lang }}</option>
+                    }
+                </select>
+            </div>
+        </ng-template>
+    </p-toolbar>
 
     }
-
-    <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
-        @for (lang of availableLangs; track lang) {
-        <option [value]="lang">{{ lang }}</option>
-        }
-    </select>
-
 </ng-container>

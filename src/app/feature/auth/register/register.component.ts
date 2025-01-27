@@ -4,13 +4,31 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthResponse } from '@core/models/users';
 import { AuthService } from '@core/services/auth.service';
-import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
-import { AlertComponent } from '@shared/components/alert/alert.component';
+import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { PanelModule } from 'primeng/panel';
+import { ToastModule } from 'primeng/toast';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslocoDirective, TranslocoPipe, AlertComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslocoDirective,
+
+    CardModule,
+    PanelModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+    MessageModule,
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -20,42 +38,9 @@ export class RegisterComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  showAlert: boolean = false;
-  alertClassRegister: string = '';
-  alertMessageRegister: string = '';
+  private messageService = inject(MessageService);
+  private transloco = inject(TranslocoService);
 
-  private handleRegisterSucess() {
-    this.alertClassRegister = '';
-    this.alertMessageRegister = 'alertMessage.registerSuccess';
-    this.showAlert = true;
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private handleRegisterError() {
-    this.alertClassRegister = '';
-    this.alertMessageRegister = 'alertMessage.registerError';
-    this.showAlert = true;
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private reRequiredFields() {
-    this.alertClassRegister = '';
-    this.alertMessageRegister = 'alertMessage.errorCredentials';
-    this.showAlert = true;
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
 
   registerForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -63,6 +48,20 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', Validators.required]
   });
+
+  private showToast(severity: string, translationKeySummary: string, translationKeyDetail: string): void {
+
+    const translatedSummary = this.transloco.translate(translationKeySummary);
+    const translatedDetail = this.transloco.translate(translationKeyDetail);
+
+    this.messageService.add({
+      severity,
+      summary: translatedSummary,
+      detail: translatedDetail,
+      life: 1000,
+    });
+
+  }
 
   async onSubmit() {
     if (this.registerForm.valid) {
@@ -76,21 +75,21 @@ export class RegisterComponent {
 
           localStorage.setItem('token', response.token);
 
-          this.handleRegisterSucess()
+          this.showToast('success', 'alertMessage.registerSuccess', 'alertMessage.registerSuccess');
 
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 1500);
 
         } catch (error) {
-          this.handleRegisterError()
+          this.showToast('error', 'alertMessage.registerError', 'alertMessage.registerError');
         }
       } else {
-        this.handleRegisterError()
+        this.showToast('error', 'alertMessage.registerError', 'alertMessage.registerError');
       }
 
     } else {
-      this.reRequiredFields()
+      this.showToast('warn', 'alertMessage.errorCredentials', 'alertMessage.errorCredentials');
     }
 
   }

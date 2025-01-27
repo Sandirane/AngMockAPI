@@ -1,10 +1,21 @@
 <ng-container *transloco="let t">
-    <h1>{{ t('profilePage.title') }}</h1>
 
-    @if(user) {
-
-    <h5>{{ t('profilePage.profilName') }} : {{ user.name }}</h5>
-    <span>{{ t('profilePage.profilEmail') }}  : {{ user.email }}</span>
-
-    }
+    <div class="grid align-items-center surface-0 text-center p-5 md:text-left md:p-8 bg-white">
+        @if(user) {
+        <div class="col-12">
+            <h1 class="text-5xl font-bold mb-3 text-primary">
+                <p-avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
+                {{ t('profilePage.title') }}
+            </h1>
+            <p class="text-4xl text-secondary mb-4">
+                {{ t('profilePage.profilName') }} : {{ user.name }}
+            </p>
+            <p class="text-4xl text-secondary mb-4">
+                {{ t('profilePage.profilEmail') }} : {{ user.email }}
+            </p>
+        </div>
+        }
+ 
+    </div>
+ 
 </ng-container>

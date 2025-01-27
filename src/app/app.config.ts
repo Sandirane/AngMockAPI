@@ -7,6 +7,11 @@ import { I18nService } from '@core/services/i18n.service';
 import { TranslocoLoader, Translation, provideTransloco } from '@ngneat/transloco';
 import { authInterceptor } from '@core/interceptor/auth.interceptor';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+import { MessageService } from 'primeng/api';
+
 @Injectable({ providedIn: 'root' })
 export class TranslocoModuleLoader implements TranslocoLoader {
   getTranslation(lang: string): Promise<Translation> {
@@ -17,7 +22,14 @@ export class TranslocoModuleLoader implements TranslocoLoader {
 const i18nService = new I18nService(window);
 
 export const appConfig: ApplicationConfig = {
-  providers: [
+  providers: [ 
+    MessageService,
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
