@@ -1,52 +1,70 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassRegister" [alertMessage]="alertMessageRegister | transloco" />
+    <p-toast />
 
-    <p>{{ t('registerPage.title') }}</p>
+    <div class="shadow-2 border-round text-center md:p-8 bg-white ">
 
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-        <label for="name">{{ t('registerPage.name') }}</label> <br />
-        <input formControlName="name" type="text" id="name" /> <br /> <br />
+            <div class="text-center mb-5">
+                <div class="text-900 text-3xl font-medium mb-3">
+                    {{ t('registerPage.title') }}
+                </div>
+            </div>
 
-        @if(registerForm.get('name')?.invalid && registerForm.get('name')?.touched){
-        <div>
-            {{ t('alertMessage.registerNameRequired') }}
-        </div>
-        }
+            <label class="block text-900 font-medium mb-2" for="name">{{ t('registerPage.name') }}</label>
+            <input class="w-full mb-3" type="text" formControlName="name" id="name" pInputText>
 
-        <label for="email">{{ t('registerPage.email') }}</label> <br />
-        <input formControlName="email" type="email" id="email" /> <br /> <br />
+            @if(registerForm.get('name')?.invalid && registerForm.get('name')?.touched){
+            <p-message severity="error" variant="outlined">
+                {{ t('alertMessage.registerNameRequired') }}
+            </p-message>
+            }
 
-        @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched){
-        <div>
-            {{ t('alertMessage.registerEmailRequired') }}
-        </div>
-        }
+            <label class="block text-900 font-medium mb-2" for="email">{{ t('registerPage.email') }}</label>
+            <input class="w-full mb-3" formControlName="email" type="text" id="name" pInputText>
 
-        <label for="password">{{ t('registerPage.password') }}</label> <br />
-        <input formControlName="password" type="password" id="password" /> <br /> <br />
+            @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched){
+            <p-message severity="error" variant="outlined">
+                {{ t('alertMessage.registerEmailRequired') }}
+            </p-message>
+            }
 
-        @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched){
-        <div>
-            {{ t('alertMessage.errorCharacters') }}
-        </div>
-        }
+            <label class="block text-900 font-medium mb-2" for="password">{{ t('registerPage.password') }}</label>
+            <input class="w-full mb-3" formControlName="password" type="password" id="password" pInputText>
 
-        <label for="confirm-password">{{ t('registerPage.confirmPassword') }}</label> <br />
-        <input formControlName="confirmPassword" type="password" id="confirm-password" /> <br /> <br />
+            @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched){
+            <p-message severity="error" variant="outlined">
+                {{ t('alertMessage.errorCharacters') }}
+            </p-message>
+            }
 
-        @if(registerForm.get('confirmPassword')?.invalid &&
-        registerForm.get('confirmPassword')?.touched){
-        <div>
-            {{ t('alertMessage.registerConfirmPasswordRequired') }}
-        </div>
-        }
+            <label class="block text-900 font-medium mb-2" for="confirm-password">
+                {{ t('registerPage.confirmPassword') }}
+            </label>
+            <input class="w-full mb-3" formControlName="confirmPassword" type="password" id="confirm-password"
+                pInputText>
 
-        <button type="submit" [disabled]="registerForm.invalid">
-            {{ t('registerPage.buttonValidation') }}
-        </button>
-        <p>{{ t('registerPage.backLogin') }} <a routerLink="/auth/login">{{ t('registerPage.buttonLogin') }}</a></p>
+            @if(registerForm.get('confirmPassword')?.invalid &&
+            registerForm.get('confirmPassword')?.touched){
+            <p-message severity="error" variant="outlined">
+                {{ t('alertMessage.registerConfirmPasswordRequired') }}
+            </p-message>
+            }
 
-    </form>
+            <button pButton pRipple label="{{ t('registerPage.buttonValidation') }}" icon="pi pi-user" class="w-full"
+                [disabled]="registerForm.invalid">
+            </button>
+
+            <p>
+                {{ t('registerPage.backLogin') }}
+                <a routerLink="/auth/login">
+                    {{ t('registerPage.buttonLogin') }}
+                </a>
+            </p>
+
+        </form>
+    </div>
+
+
 </ng-container>

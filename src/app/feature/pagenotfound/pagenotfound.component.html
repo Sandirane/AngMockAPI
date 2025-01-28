@@ -1,10 +1,18 @@
 <ng-container *transloco="let t">
-    <h2>
-        <span>{{ t('noFoundPage.noFoundTitle') }}</span>
-    </h2>
-    <h3>{{ t('noFoundPage.noFoundSubTitle') }}</h3>
-    <p>{{ t('noFoundPage.noFoundDescription') }}</p>
-    <button type="button" [routerLink]="['/']">
-        {{ t('noFoundPage.buttonBack') }}
-    </button>
+
+    <p-card>
+        <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
+            <div class="text-700 text-center">
+                <div class="text-blue-600 font-bold mb-3">
+                    ERROR {{
+                    t('noFoundPage.noFoundTitle') }}</div>
+                <div class="text-900 font-bold text-5xl mb-3">{{ t('noFoundPage.noFoundSubTitle') }}</div>
+                <div class="text-700 text-2xl mb-5">{{ t('noFoundPage.noFoundDescription') }}</div>
+
+                <button pButton severity="contrast" label="{{ t('noFoundPage.buttonBack') }}" [routerLink]="['/']"
+                    class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
+            </div>
+        </div>
+    </p-card>
+
 </ng-container>

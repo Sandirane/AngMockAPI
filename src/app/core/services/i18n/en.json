@@ -66,7 +66,13 @@
         "actionButtonTitle": "Action",
         "buttonAdd": "Add project",
         "buttonEdit": "Edit project",
-        "buttondelete": "Delete project"
+        "buttondelete": "Delete project",
+        "noProject":"No projects found",
+        "confirmDeleteMessage": "Are you sure you want to delete this project?",
+        "confirmDeleteTitle": "Confirm Deletion",
+        "deleteCancelled": "Project deletion cancelled.",
+        "confirmYes": "Yes",
+        "confirmNo":"No"
     },
     "addProjectPage": {
         "title": "Add project",
@@ -100,8 +106,10 @@
     "aboutPage": {
         "title": "About",
         "description1": "Open source framework, based on TypeScript",
-        "description2": "Bootstrap is an open source CSS framework",
-        "description3": "Added the following packages: angular-datatables, transloco, jwt-decode"
+        "description2": "PrimeNG is an open-source UI component library designed for Angular",
+        "description3": "MockAPI is a simple tool that allows you to easily create APIs, generate custom data and perform operations on them using the RESTful interface.",
+        "description4": "Project link here: https://github.com/Sandirane/AngMockAPI/tree/PrimeNg",
+        "description5": "Transloco allows you to define translations of content in different languages ​​and easily switch between them"
     },
     "footer": {
         "footerDescription": ""

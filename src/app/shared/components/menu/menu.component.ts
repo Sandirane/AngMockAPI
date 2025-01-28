@@ -6,6 +6,8 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { I18nService } from '@core/services/i18n.service';
 import { TranslocoDirective } from '@ngneat/transloco';
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
 import { Observable } from 'rxjs';
 
 interface Action {
@@ -15,10 +17,11 @@ interface Action {
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule, RouterLink, TranslocoDirective, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, TranslocoDirective, ReactiveFormsModule, ToolbarModule, ButtonModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
+
 export class MenuComponent {
 
   private router = inject(Router);

@@ -1,9 +1,15 @@
-<app-menu />
-<!--
-@if(showAlert) {
-<p>Http Error Response : {{message}}</p>
-}
--->
-<router-outlet />
+<div class="flex flex-column min-h-screen">
+    <app-menu />
 
-<app-footer />
+    @if(showAlert) {
+    <p-message severity="error" [life]="5000">
+        Http Error Response : {{message}}
+    </p-message>
+    }
+ 
+    <div class="flex-grow-1 flex justify-content-center align-items-center">
+        <router-outlet />
+    </div>
+
+    <app-footer />
+</div>

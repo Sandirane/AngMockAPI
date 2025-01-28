@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { loggedGuard } from '@core/guards/logged.guard';
+import { AboutComponent } from '@feature/about/about.component';
 import { HomeComponent } from '@feature/home/home.component';
 import { NotautorizedComponent } from '@feature/notautorized/notautorized.component';
 import { PagenotfoundComponent } from '@feature/pagenotfound/pagenotfound.component';
@@ -16,6 +17,7 @@ export const routes: Routes = [
         loadChildren: () => import('@feature/admin/adminRoutes')
             .then(m => m.adminRoutes), canActivate: [loggedGuard]
     },
+    { path: 'about', component: AboutComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'notauthorized', component: NotautorizedComponent },
     { path: '**', component: PagenotfoundComponent },

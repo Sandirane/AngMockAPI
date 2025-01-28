@@ -3,13 +3,37 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Project } from '@core/models/project';
 import { ProjectsService } from '@core/services/projects.service';
-import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
-import { AlertComponent } from '@shared/components/alert/alert.component';
+import { TranslocoDirective } from '@ngneat/transloco';
+import { ButtonModule } from 'primeng/button';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SkeletonModule } from 'primeng/skeleton';
+import { TableModule } from 'primeng/table';
 import { firstValueFrom } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { TranslocoService } from '@ngneat/transloco';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-projects',
-  imports: [CommonModule, RouterLink, TranslocoDirective, TranslocoPipe, AlertComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    TranslocoDirective,
+
+    InputTextModule,
+    IconField,
+    InputIcon,
+    TableModule,
+    SkeletonModule,
+    ButtonModule,
+    ToastModule,
+    MessageModule,
+    ConfirmDialogModule
+  ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
 })
@@ -18,35 +42,29 @@ export class ProjectsComponent {
   public projects: Project[] = [];
   private projectsService = inject(ProjectsService);
 
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
+  private transloco = inject(TranslocoService);
+
   isLoading: boolean = true;
 
   selectedProjectId: number | null = null;
 
-  showAlert: boolean = false;
-  alertClassDelete: string = '';
-  alertMessageDelete: string = '';
+  private showToast(severity: string, translationKeySummary: string, translationKeyDetail: string): void {
 
-  private handleDeleteSucess() {
-    this.showAlert = true;
-    this.alertClassDelete = '';
-    this.alertMessageDelete = 'alertMessage.messageDeleteSuccess';
+    const translatedSummary = this.transloco.translate(translationKeySummary);
+    const translatedDetail = this.transloco.translate(translationKeyDetail);
 
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private handleDeleteError() {
-    this.showAlert = true;
-    this.alertClassDelete = '';
-    this.alertMessageDelete = 'alertMessage.messageDeleteError';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
+    this.messageService.add({
+      severity,
+      summary: translatedSummary,
+      detail: translatedDetail,
+      life: 1000,
+    });
 
   }
+
 
   async ngOnInit() {
 
@@ -68,23 +86,34 @@ export class ProjectsComponent {
 
   async deleteSubmit(projectId: number) {
 
-    this.selectedProjectId = projectId;
-
-    if (this.selectedProjectId !== null) {
-      try {
-
-        await firstValueFrom(this.projectsService.deleteProject(this.selectedProjectId));
-        this.projects = this.projects.filter(project => project.id !== this.selectedProjectId);
-
-        this.handleDeleteSucess()
-
-      } catch (err) {
-
-        console.error("Error deleting project:", err);
-
-        this.handleDeleteError()
+    this.confirmationService.confirm({
+      message: this.transloco.translate('projectPage.confirmDeleteMessage'),
+      header: this.transloco.translate('projectPage.confirmDeleteTitle'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptButtonStyleClass: 'p-button-danger',  
+      rejectButtonStyleClass: 'p-button-secondary',  
+      acceptLabel: this.transloco.translate('projectPage.confirmYes'), 
+      rejectLabel: this.transloco.translate('projectPage.confirmNo'),
+      accept: async () => {
+        try {
+          await firstValueFrom(this.projectsService.deleteProject(projectId));
+          this.projects = this.projects.filter(project => project.id !== projectId);
+          this.showToast('success', 'success', 'alertMessage.messageDeleteSuccess');
+        } catch (err) {
+          console.error("Error deleting project:", err);
+          this.showToast('error', 'error', 'alertMessage.messageDeleteError');
+        }
+      },
+      reject: () => {
+        this.showToast('info', 'info', 'projectPage.deleteCancelled');
       }
-    }
+    });
+
+  }
+
+  truncateText(text: string, limit: number): string {
+    if (!text) return '';
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
   }
 
 }

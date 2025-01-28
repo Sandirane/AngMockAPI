@@ -4,14 +4,33 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthResponse } from '@core/models/users';
 import { AuthService } from '@core/services/auth.service';
-import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
-import { AlertComponent } from '@shared/components/alert/alert.component';
+import { TranslocoDirective } from '@ngneat/transloco';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { MessageModule } from 'primeng/message';
+import { PanelModule } from 'primeng/panel';
+import { CardModule } from 'primeng/card';
+import { MessageService } from 'primeng/api';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslocoDirective, TranslocoPipe, AlertComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslocoDirective,
+
+    CardModule,
+    PanelModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+    MessageModule,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
@@ -19,80 +38,56 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  showAlert: boolean = false;
-  alertClassLogin: string = '';
-  alertMessageLogin: string = '';
-
-  private handleLoginSucess() {
-
-    this.showAlert = true;
-    this.alertClassLogin = '';
-    this.alertMessageLogin = 'alertMessage.loginSuccess';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-  }
-
-  private handleLoginError() {
-
-    this.showAlert = true;
-    this.alertClassLogin = '';
-    this.alertMessageLogin = 'alertMessage.loginError';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-  }
-
-  private reRequiredFields() {
-
-    this.showAlert = true;
-    this.alertClassLogin = '';
-    this.alertMessageLogin = 'alertMessage.errorCredentials';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
+  private messageService = inject(MessageService);
+  private transloco = inject(TranslocoService);
 
   loginForm: FormGroup = this.fb.group({
-
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  });
 
-  })
+  private showToast(severity: string, translationKeySummary: string, translationKeyDetail: string): void {
+
+    const translatedSummary = this.transloco.translate(translationKeySummary);
+    const translatedDetail = this.transloco.translate(translationKeyDetail);
+
+    this.messageService.add({
+      severity,
+      summary: translatedSummary,
+      detail: translatedDetail,
+      life: 1000,
+    });
+
+  }
 
   async onSubmit() {
     if (this.loginForm.valid) {
-
       const { email, password } = this.loginForm.value;
-      
+
       try {
-      
         const response: AuthResponse | undefined = await this.authService.login(email, password).toPromise();
-      
+
         if (response) {
 
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
 
-          this.handleLoginSucess()
+          this.showToast('success', 'success', 'alertMessage.loginSuccess');
 
           setTimeout(() => {
             this.router.navigateByUrl('admin/projects');
           }, 1500);
 
         } else {
-          this.handleLoginError()
+          this.showToast('error', 'error', 'alertMessage.loginError');
         }
       } catch (error) {
-        this.handleLoginError()
+        this.showToast('error', 'error', 'alertMessage.loginError');
       }
     } else {
-      this.reRequiredFields()
+      this.showToast('warn', 'warn', 'alertMessage.errorCredentials');
     }
   }
+
 
 }

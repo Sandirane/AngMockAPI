@@ -1,32 +1,55 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassLogin" [alertMessage]="alertMessageLogin | transloco" />
+    <p-toast />
 
-    <p>{{ t('loginPage.title') }}</p>
+    <div class="shadow-2 border-round text-center md:p-8 bg-white ">
 
-    <p>Email : fake&#64;gmail.com</p>
-    <p> Password : azertyuiop</p>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <label for="email">{{ t('loginPage.email') }}</label><br />
-        <input formControlName="email" type="email" id="email" /><br /><br />
+            <div class="text-center mb-5">
+                <div class="text-900 text-3xl font-medium mb-3">
+                    {{ t('loginPage.title') }}
+                </div>
+            </div>
 
-        @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched){
-        <p> {{ t('alertMessage.errorEmail') }} </p>
-        }
+            <div>
 
-        <label for="password">{{ t('loginPage.password') }}</label><br />
-        <input formControlName="password" type="password" id="password" /><br /><br />
+                <p>Email : fake&#64;gmail.com</p>
+                <p> Password : azertyuiop</p>
 
-        @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched){
-        <p> {{ t('alertMessage.errorCharacters') }} </p>
-        }
+                <label class="block text-900 font-medium mb-2" for="email">{{ t('loginPage.email') }}</label>
+                <input class="w-full mb-3" type="text" formControlName="email" type="email" id="email" pInputText>
 
-        <button type="submit" [disabled]="loginForm.invalid">
-            {{ t('loginPage.buttonValidation') }}
-        </button><br />
-        <p>{{ t('loginPage.backRegister') }} <a routerLink="/auth/register">{{ t('loginPage.buttonRegister') }}</a></p>
+                @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched){
+                <p-message severity="error" variant="outlined">
+                    {{ t('alertMessage.errorEmail') }}
+                </p-message>
+                }
 
-    </form>
- 
+                <label class="block text-900 font-medium mb-2" for="password">{{ t('loginPage.password') }}</label>
+                <input class="w-full mb-3" formControlName="password" type="password" id="password" pInputText>
+
+                @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched){
+                <p-message severity="error" variant="outlined">
+                    {{ t('alertMessage.errorCharacters') }}
+                </p-message>
+                }
+
+                <button pButton pRipple label=" {{ t('loginPage.buttonValidation') }}" icon="pi pi-user" class="w-full"
+                    [disabled]="loginForm.invalid">
+                </button>
+
+                <p>
+                    {{ t('loginPage.backRegister') }}
+                    <a routerLink="/auth/register">
+                        {{ t('loginPage.buttonRegister') }}
+                    </a>
+                </p>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </ng-container>

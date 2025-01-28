@@ -1,45 +1,81 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassDelete"
-        [alertMessage]="alertMessageDelete | transloco" />
+    <p-toast />
+    <p-confirmDialog />
 
-    <h1>{{ t('projectPage.title') }}</h1>
+    <div class=" text-center p-5 bg-white">
 
-    <button class="btn btn-outline-primary" [routerLink]="['/admin/add-product']">
-        {{ t('projectPage.buttonAdd') }}
-    </button>
+        <h1>{{ t('projectPage.title') }}</h1>
 
-    <br />
+        @if(!isLoading && (!projects || projects.length === 0)) {
 
-    @if(isLoading) {
+        <p-message severity="contrast">
+            {{ t('projectPage.noProject') }}
+        </p-message>
 
-    Loading...
+        }
 
-    } @else {
+        @if(isLoading) {
 
-    @for (project of projects; track project.id) {
+        <p-skeleton width="550px" height="350px" />
 
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>{{ t('projectPage.nameProject') }}</th>
-            <th>{{ t('projectPage.descriptionProject') }}</th>
-            <th>{{ t('projectPage.actionButtonTitle') }}</th>
-        </tr>
-        <tr>
-            <td>{{ project.id }}</td>
-            <td>{{ project.name }}</td>
-            <td>{{ project.description }}</td>
-            <td>
-                <button [routerLink]="['/admin/project', project.id]">
-                    {{ t('projectPage.buttonEdit') }}
-                </button> |
-                <button (click)="deleteSubmit(project.id)">
-                    {{ t('projectPage.buttondelete') }}
-                </button>
-            </td>
-        </tr>
-    </table>
-    }
-    }
+        } @else {
+
+        <div class="surface-card p-4 shadow-2 border-round">
+            <p-table #dt2 [value]="projects" [tableStyle]="{ 'min-width': '50rem' }" dataKey="id" [paginator]="true"
+                [rows]="5" [rowsPerPageOptions]="[5, 10, 20]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [globalFilterFields]="['name', 'description']">
+                <ng-template #caption>
+                    <div class="flex">
+
+                        <p-button [routerLink]="['/admin/add-product']" severity="contrast" size="small">
+                            {{ t('projectPage.buttonAdd') }}
+                        </p-button>
+
+                        <p-iconfield iconPosition="left" class="ml-auto">
+                            <p-inputicon>
+                                <i class="pi pi-search"></i>
+                            </p-inputicon>
+
+                            <input pInputText type="text"
+                                (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+                                placeholder="Search" />`
+
+                        </p-iconfield>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id</th>
+                        <th>{{ t('projectPage.nameProject') }}</th>
+                        <th>{{ t('projectPage.descriptionProject') }}</th>
+                        <th>{{ t('projectPage.actionButtonTitle') }}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-project>
+                    <tr>
+                        <td>{{ project?.id }}</td>
+                        <td>{{ project?.name }}</td>
+                        <td>{{ truncateText(project?.description, 50) }}</td>
+                        <td>
+                            <p-button [routerLink]="['/admin/project', project.id]" severity="secondary" size="small">
+
+                                <i class="pi pi-file-edit"></i>
+                            </p-button>
+
+                            <p-button (click)="deleteSubmit(project.id)" severity="danger" size="small">
+                                <i class="pi pi-trash"></i>
+                            </p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        }
+
+    </div>
+
 </ng-container>

@@ -3,13 +3,29 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ProjectsService } from '@core/services/projects.service';
-import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
-import { AlertComponent } from '@shared/components/alert/alert.component';
+import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
 import { firstValueFrom } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+import { TextareaModule } from 'primeng/textarea';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-projet',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslocoDirective, TranslocoPipe, AlertComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    TranslocoDirective,
+
+    ButtonModule,
+    TextareaModule,
+    InputTextModule,
+    ToastModule,
+    MessageModule,
+  ],
   templateUrl: './add-projet.component.html',
   styleUrl: './add-projet.component.css'
 })
@@ -20,41 +36,20 @@ export class AddProjetComponent {
   private router = inject(Router);
   private fb = inject(FormBuilder);
 
-  showAlert: boolean = false;
-  alertClassAdd: string = '';
-  alertMessageAdd: string = '';
+  private messageService = inject(MessageService);
+  private transloco = inject(TranslocoService);
 
-  private handleAddSucess() {
-    this.showAlert = true;
-    this.alertClassAdd = '';
-    this.alertMessageAdd = 'alertMessage.messageAddSuccess';
+  private showToast(severity: string, translationKeySummary: string, translationKeyDetail: string): void {
 
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
+    const translatedSummary = this.transloco.translate(translationKeySummary);
+    const translatedDetail = this.transloco.translate(translationKeyDetail);
 
-  }
-
-  private handleAddError() {
-    this.showAlert = true;
-    this.alertClassAdd = '';
-    this.alertMessageAdd = 'alertMessage.messageAddError';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private reRequiredFields() {
-    this.showAlert = true;
-    this.alertClassAdd = '';
-    this.alertMessageAdd = 'alertMessage.messageRequiredFields';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
+    this.messageService.add({
+      severity,
+      summary: translatedSummary,
+      detail: translatedDetail,
+      life: 1000,
+    });
   }
 
   ngOnInit() {
@@ -69,14 +64,14 @@ export class AddProjetComponent {
   async addSubmit() {
 
     if (this.projectFormGroup.invalid) {
-      this.reRequiredFields()
+      this.showToast('warn', 'warn', 'alertMessage.messageRequiredFields');
       return;
     }
 
     try {
       const newProject = await firstValueFrom(this.projectsService.addProject(this.projectFormGroup.value));
-      this.handleAddSucess()
-      
+      this.showToast('success', 'success', 'alertMessage.messageAddSuccess');
+
       setTimeout(() => {
         this.router.navigateByUrl(`admin/projects`);
       }, 1500);
@@ -84,7 +79,7 @@ export class AddProjetComponent {
     } catch (err) {
 
       console.error("Error:", err);
-      this.handleAddError()
+      this.showToast('error', 'error', 'alertMessage.messageAddError');
 
     }
 
