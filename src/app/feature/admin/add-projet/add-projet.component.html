@@ -1,21 +1,52 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassAdd" [alertMessage]="alertMessageAdd | transloco" />
+    <p-toast />
 
-    <h1>{{ t('addProjectPage.title') }}</h1>
+    <div class="col-12">
 
-    <form [formGroup]="projectFormGroup" (ngSubmit)="addSubmit()">
+        <div class="grid align-items-center surface-0 text-center p-5 bg-white">
 
-        <label for="name">{{ t('addProjectPage.nameProject') }}*</label><br />
-        <input type="text" id="name" formControlName="name"><br /><br />
+            <div class="p-5 h-full">
 
-        <label for="description">{{ t('addProjectPage.description') }}*</label><br />
-        <textarea id="description" formControlName="description"></textarea><br /><br />
+                <div class="shadow-2 p-3 flex flex-column surface-card" style="border-radius: 6px">
+                    <h1>{{ t('addProjectPage.title') }}</h1>
 
-        <button type="submit" [disabled]="projectFormGroup.invalid">{{ t('addProjectPage.buttonAdd') }}</button> <br />
-        <button type="button" [routerLink]="['/admin/projects']">{{ t('addProjectPage.buttonCancel') }}</button>
+                    <hr class="my-3 mx-0 border-top-1 border-none surface-border" />
+                    <form [formGroup]="projectFormGroup" (ngSubmit)="addSubmit()">
+                        <ul class="list-none p-0 m-0 flex-grow-1">
+                            <li class="flex align-items-center mb-3">
+                                <label for="name">{{ t('addProjectPage.nameProject') }}*</label>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <input type="text" pInputText id="name" formControlName="name">
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <label for="description">{{ t('addProjectPage.description') }}*</label>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <textarea id="description" rows="10" cols="50" pTextarea
+                                    formControlName="description"></textarea>
+                            </li>
+                        </ul>
 
 
-    </form>
+                        <hr class="mb-3 mx-0 border-top-1 border-none surface-border" />
+
+                        <p-button severity="contrast"  type="submit" [disabled]="projectFormGroup.invalid">
+                            {{ t('addProjectPage.buttonAdd') }}
+                        </p-button>
+
+                        <p-button severity="secondary" type="button" [routerLink]="['/admin/projects']">
+                            {{ t('addProjectPage.buttonCancel') }}
+                        </p-button>
+ 
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </ng-container>

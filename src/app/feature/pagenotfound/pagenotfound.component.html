@@ -3,12 +3,13 @@
     <p-card>
         <div class="surface-section px-4 py-8 md:px-6 lg:px-8">
             <div class="text-700 text-center">
-                <div class="text-blue-600 font-bold mb-3"><i class="pi pi-discord"></i>ERROR {{
+                <div class="text-blue-600 font-bold mb-3">
+                    ERROR {{
                     t('noFoundPage.noFoundTitle') }}</div>
                 <div class="text-900 font-bold text-5xl mb-3">{{ t('noFoundPage.noFoundSubTitle') }}</div>
                 <div class="text-700 text-2xl mb-5">{{ t('noFoundPage.noFoundDescription') }}</div>
-                <button pButton pRipple label="{{ t('noFoundPage.buttonBack') }}" [routerLink]="['/']"
-                    icon="pi pi-discord"
+
+                <button pButton severity="contrast" label="{{ t('noFoundPage.buttonBack') }}" [routerLink]="['/']"
                     class="font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap"></button>
             </div>
         </div>

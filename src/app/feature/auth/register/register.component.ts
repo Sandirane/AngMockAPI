@@ -89,7 +89,7 @@ export class RegisterComponent {
       }
 
     } else {
-      this.showToast('warn', 'alertMessage.errorCredentials', 'alertMessage.errorCredentials');
+      this.showToast('warn', 'warn', 'alertMessage.errorCredentials');
     }
 
   }

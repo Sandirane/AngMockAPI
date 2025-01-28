@@ -10,7 +10,7 @@ import { authInterceptor } from '@core/interceptor/auth.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoModuleLoader implements TranslocoLoader {
@@ -23,6 +23,7 @@ const i18nService = new I18nService(window);
 
 export const appConfig: ApplicationConfig = {
   providers: [ 
+    ConfirmationService,
     MessageService,
     provideAnimationsAsync(),
     providePrimeNG({

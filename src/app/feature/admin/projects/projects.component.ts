@@ -11,10 +11,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { firstValueFrom } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TranslocoService } from '@ngneat/transloco';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-projects',
@@ -31,6 +32,7 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     ToastModule,
     MessageModule,
+    ConfirmDialogModule
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
@@ -41,6 +43,8 @@ export class ProjectsComponent {
   private projectsService = inject(ProjectsService);
 
   private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+  
   private transloco = inject(TranslocoService);
 
   isLoading: boolean = true;
@@ -61,6 +65,7 @@ export class ProjectsComponent {
 
   }
 
+
   async ngOnInit() {
 
     try {
@@ -79,25 +84,30 @@ export class ProjectsComponent {
     }
   }
 
+ 
+
   async deleteSubmit(projectId: number) {
 
     this.selectedProjectId = projectId;
 
     if (this.selectedProjectId !== null) {
+
       try {
 
         await firstValueFrom(this.projectsService.deleteProject(this.selectedProjectId));
         this.projects = this.projects.filter(project => project.id !== this.selectedProjectId);
 
-        this.showToast('success', 'alertMessage.loginSuccess', 'alertMessage.messageDeleteSuccess');
+        this.showToast('success', 'success', 'alertMessage.messageDeleteSuccess');
 
       } catch (err) {
 
         console.error("Error deleting project:", err);
 
-        this.showToast('error', 'alertMessage.errorLogin', 'alertMessage.messageDeleteError');
+        this.showToast('error', 'error', 'alertMessage.messageDeleteError');
       }
+
     }
+
   }
 
 }

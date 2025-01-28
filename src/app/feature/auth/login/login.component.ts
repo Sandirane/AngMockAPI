@@ -68,24 +68,24 @@ export class LoginComponent {
         const response: AuthResponse | undefined = await this.authService.login(email, password).toPromise();
 
         if (response) {
-          
+
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
 
-          this.showToast('success', 'alertMessage.loginSuccess', 'alertMessage.loginSuccess');
+          this.showToast('success', 'success', 'alertMessage.loginSuccess');
 
           setTimeout(() => {
             this.router.navigateByUrl('admin/projects');
           }, 1500);
 
         } else {
-          this.showToast('error', 'alertMessage.errorLogin', 'alertMessage.loginError');
+          this.showToast('error', 'error', 'alertMessage.loginError');
         }
       } catch (error) {
-        this.showToast('error', 'alertMessage.errorLogin', 'alertMessage.loginError');
+        this.showToast('error', 'error', 'alertMessage.loginError');
       }
     } else {
-      this.showToast('warn', 'alertMessage.errorCredentials', 'alertMessage.errorCredentials');
+      this.showToast('warn', 'warn', 'alertMessage.errorCredentials');
     }
   }
 

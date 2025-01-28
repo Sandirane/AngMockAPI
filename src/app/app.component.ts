@@ -4,10 +4,11 @@ import { RouterOutlet } from '@angular/router';
 import { ApiErrorService } from '@core/services/api-error.service';
 import { FooterComponent } from '@shared/components/footer/footer.component';
 import { MenuComponent } from '@shared/components/menu/menu.component';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MenuComponent, FooterComponent, CommonModule],
+  imports: [RouterOutlet, MenuComponent, FooterComponent, CommonModule, MessageModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -23,10 +24,9 @@ export class AppComponent {
 
     this.apiErrorService.apiError
       .subscribe(
-        data => {
-          alert(this.message = data)
-          // this.message = data
-          //this.showAlert = true
+        data => { 
+          this.message = data
+          this.showAlert = true 
         }
       )
   }

@@ -1,28 +1,30 @@
 <ng-container *transloco="let t">
- 
+
     <div class="grid align-items-center surface-0 text-center p-5 md:text-left md:p-8 bg-white">
-        
-            <div class="col-12 md:col-6">
-                <h1 class="text-5xl font-bold mb-3 text-primary">{{ t('homePage.title') }}</h1>
-                <h2 class="text-4xl text-secondary mb-4">{{ t('homePage.subTitle') }}</h2>
-                <p class="text-lg text-secondary-500 mb-5">
-                    {{ t('homePage.description') }}
-                </p>
+
+        <div class="col-12 md:col-6">
+            <h1 class="text-5xl font-bold mb-3 text-primary">{{ t('homePage.title') }}</h1>
+            <h2 class="text-4xl text-secondary mb-4">{{ t('homePage.subTitle') }}</h2>
+            <p class="text-lg text-secondary-500 mb-5">
+                {{ t('homePage.description') }}
+            </p>
+<!--
                 <div class="flex gap-3">
                     <p-button severity="info">
                         {{ t('homePage.helpButton') }}
                     </p-button>
-                </div>
-            </div>
+                </div> 
+-->
+        </div>
 
-            <div class="col-12 md:col-6">
-                <div class="p-card shadow-2 border-round overflow-hidden"
-                    style="clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 0% 100%)">
-                    <img src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="Image illustrée"
-                        class="w-full h-auto" />
-                </div>
+        <div class="col-12 md:col-6">
+            <div class="p-card shadow-2 border-round overflow-hidden"
+                style="clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 0% 100%)">
+                <img src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="Image illustrée"
+                    class="w-full h-auto" />
             </div>
-         
+        </div>
+
     </div>
 
 </ng-container>
