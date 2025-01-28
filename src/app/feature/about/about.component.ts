@@ -6,8 +6,8 @@ import { I18nService } from '@core/services/i18n.service';
 import { TranslocoDirective } from '@ngneat/transloco';
 
 interface EventItem {
-  name?: string;
-  decription?: string;
+  name: string;
+  description: string
   icon?: string;
 }
 
@@ -24,11 +24,11 @@ export class AboutComponent {
   private i18nService = inject(I18nService);
 
   events: Array<EventItem> = [
-    { name: 'Angular 19', icon: 'desktop', decription: 'Framework open source, basé sur TypeScript' },
-    { name: 'PrimeNG', icon: 'prime',  decription: 'PrimeNG est une bibliothèque open-source de composants UI conçue pour Angular' },
-    { name: 'MockAPI', icon: 'globe',  decription: 'MockAPI est un outil simple qui vous permet de facilement créer des API, de générer des données personnalisées et d\'effectuer des opérations dessus à l\'aide de l\'interface RESTful.' },
-    { name: 'Github', icon: 'github',  decription: 'Lien du projet ici : https://github.com/Sandirane/AngMockAPI/tree/PrimeNg' },
-    { name: 'Transloco', icon: 'language',  decription: 'Transloco permet de définir des traductions de contenu dans différentes langues et de passer facilement de d\'une langue à une autre ' },
+    { name: 'Angular 19', icon: 'desktop', description: 'aboutPage.description1' },
+    { name: 'PrimeNG', icon: 'prime', description: 'aboutPage.description2' },
+    { name: 'MockAPI', icon: 'globe', description: 'aboutPage.description3' },
+    { name: 'Github', icon: 'github', description: 'aboutPage.description4' },
+    { name: 'Transloco', icon: 'language', description: 'aboutPage.description5' },
   ];
 
   availableLangs = this.i18nService.availableLangs;
