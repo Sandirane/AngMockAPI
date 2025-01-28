@@ -10,7 +10,7 @@
         "add": "Ajouter",
         "update": "Modifier",
         "cancel": "Annuler",
-        "language":"langue"
+        "language": "langue"
     },
     "alertMessage": {
         "errorEmail": "Veuillez saisir un email valide.",
@@ -66,7 +66,13 @@
         "actionButtonTitle": "Action",
         "buttonAdd": "Ajouter un projet",
         "buttonEdit": "Modifier un projet",
-        "buttondelete": "Supprimer un projet"
+        "buttondelete": "Supprimer un projet",
+        "noProject": " Pas de projects",
+        "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer ce projet ?",
+        "confirmDeleteTitle": "Confirmer la suppression",
+        "deleteCancelled": "Suppression du projet annulée.",
+        "confirmYes": "Oui",
+        "confirmNo":"Non"
     },
     "addProjectPage": {
         "title": "Ajouter un projet",

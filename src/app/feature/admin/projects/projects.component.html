@@ -1,6 +1,7 @@
 <ng-container *transloco="let t">
 
     <p-toast />
+    <p-confirmDialog />
 
     <div class=" text-center p-5 bg-white">
 
@@ -9,7 +10,7 @@
         @if(!isLoading && (!projects || projects.length === 0)) {
 
         <p-message severity="contrast">
-            No projects found
+            {{ t('projectPage.noProject') }}
         </p-message>
 
         }
@@ -57,7 +58,7 @@
                     <tr>
                         <td>{{ project?.id }}</td>
                         <td>{{ project?.name }}</td>
-                        <td>{{ project?.description }}</td>
+                        <td>{{ truncateText(project?.description, 50) }}</td>
                         <td>
                             <p-button [routerLink]="['/admin/project', project.id]" severity="secondary" size="small">
 

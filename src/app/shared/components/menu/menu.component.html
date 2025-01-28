@@ -1,5 +1,5 @@
 <ng-container *transloco="let t">
- 
+
     @if(isAuthenticated$ | async) {
     <p-toolbar>
         <ng-template #start>
@@ -7,11 +7,15 @@
 
                 @for(action of actions; track action) {
 
-                <p-button routerLink="{{action.route}}" severity="contrast" size="small" >
+                <p-button routerLink="{{action.route}}" severity="contrast" size="small">
                     {{ t(action.title) }}
                 </p-button>
 
                 }
+
+                <p-button severity="contrast" size="small" type="button" routerLink="/about">
+                    {{ t('menu.about') }}
+                </p-button>
             </div>
         </ng-template>
 
@@ -29,21 +33,22 @@
                 </p-button>
             </div>
         </ng-template>
- 
+
     </p-toolbar>
 
     } @else {
 
-    <p-toolbar >
+    <p-toolbar>
         <ng-template #start>
             <div class="flex items-center gap-2">
                 <p-button severity="contrast" size="small" type="button" routerLink="/">
                     {{ t('menu.home') }}
                 </p-button>
 
-                <p-button severity="contrast" size="small" type="button" routerLink="/auth/login">
-                    {{ t('menu.login') }}
+                <p-button severity="contrast" size="small" type="button" routerLink="/about">
+                    {{ t('menu.about') }}
                 </p-button>
+
             </div>
         </ng-template>
 
@@ -55,6 +60,10 @@
                     <option [value]="lang">{{ lang }}</option>
                     }
                 </select>
+
+                <p-button severity="contrast" size="small" type="button" routerLink="/auth/login">
+                    {{ t('menu.login') }}
+                </p-button>
             </div>
         </ng-template>
     </p-toolbar>

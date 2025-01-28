@@ -44,7 +44,7 @@ export class ProjectsComponent {
 
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
-  
+
   private transloco = inject(TranslocoService);
 
   isLoading: boolean = true;
@@ -84,30 +84,36 @@ export class ProjectsComponent {
     }
   }
 
- 
-
   async deleteSubmit(projectId: number) {
 
-    this.selectedProjectId = projectId;
-
-    if (this.selectedProjectId !== null) {
-
-      try {
-
-        await firstValueFrom(this.projectsService.deleteProject(this.selectedProjectId));
-        this.projects = this.projects.filter(project => project.id !== this.selectedProjectId);
-
-        this.showToast('success', 'success', 'alertMessage.messageDeleteSuccess');
-
-      } catch (err) {
-
-        console.error("Error deleting project:", err);
-
-        this.showToast('error', 'error', 'alertMessage.messageDeleteError');
+    this.confirmationService.confirm({
+      message: this.transloco.translate('projectPage.confirmDeleteMessage'),
+      header: this.transloco.translate('projectPage.confirmDeleteTitle'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptButtonStyleClass: 'p-button-danger',  
+      rejectButtonStyleClass: 'p-button-secondary',  
+      acceptLabel: this.transloco.translate('projectPage.confirmYes'), 
+      rejectLabel: this.transloco.translate('projectPage.confirmNo'),
+      accept: async () => {
+        try {
+          await firstValueFrom(this.projectsService.deleteProject(projectId));
+          this.projects = this.projects.filter(project => project.id !== projectId);
+          this.showToast('success', 'success', 'alertMessage.messageDeleteSuccess');
+        } catch (err) {
+          console.error("Error deleting project:", err);
+          this.showToast('error', 'error', 'alertMessage.messageDeleteError');
+        }
+      },
+      reject: () => {
+        this.showToast('info', 'info', 'projectPage.deleteCancelled');
       }
+    });
 
-    }
+  }
 
+  truncateText(text: string, limit: number): string {
+    if (!text) return '';
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
   }
 
 }
