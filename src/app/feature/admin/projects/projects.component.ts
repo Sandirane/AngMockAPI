@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Project } from '@core/models/project';
 import { ProjectsService } from '@core/services/projects.service';
@@ -15,74 +15,49 @@ import { firstValueFrom } from 'rxjs';
 })
 export class ProjectsComponent {
 
-  public projects: Project[] = [];
+  public projects = signal<Project[]>([]);
   private projectsService = inject(ProjectsService);
-
-  isLoading: boolean = true;
-
   selectedProjectId: number | null = null;
 
-  showAlert: boolean = false;
-  alertClassDelete: string = '';
-  alertMessageDelete: string = '';
+  isLoading = signal(true);
 
-  private handleDeleteSucess() {
-    this.showAlert = true;
-    this.alertClassDelete = '';
-    this.alertMessageDelete = 'alertMessage.messageDeleteSuccess';
+  showAlert = signal(false);
+  alertClass = signal('');
+  alertMessage = signal('');
 
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private handleDeleteError() {
-    this.showAlert = true;
-    this.alertClassDelete = '';
-    this.alertMessageDelete = 'alertMessage.messageDeleteError';
+  private showNotification(message: string, alertClass: string) {
+    this.alertMessage.set(message);
+    this.alertClass.set(alertClass);
+    this.showAlert.set(true);
 
     setTimeout(() => {
-      this.showAlert = false;
+      this.showAlert.set(false);
     }, 1000);
-
   }
 
   async ngOnInit() {
-
     try {
-
       const data = await firstValueFrom(this.projectsService.getAllProjects());
-
       setTimeout(() => {
-        this.projects = data;
-        this.isLoading = false;
+        this.projects.set(data);
+        this.isLoading.set(false);
       }, 1000);
-
     } catch (err) {
-
       console.error("Error fetching data:", err);
-
     }
   }
 
   async deleteSubmit(projectId: number) {
-
     this.selectedProjectId = projectId;
-
     if (this.selectedProjectId !== null) {
       try {
-
         await firstValueFrom(this.projectsService.deleteProject(this.selectedProjectId));
-        this.projects = this.projects.filter(project => project.id !== this.selectedProjectId);
-
-        this.handleDeleteSucess()
-
+        const updatedProjects = this.projects().filter(project => project.id !== this.selectedProjectId);
+        this.projects.set(updatedProjects);
+        this.showNotification('alertMessage.messageDeleteSuccess', 'success');
       } catch (err) {
-
         console.error("Error deleting project:", err);
-
-        this.handleDeleteError()
+        this.showNotification('alertMessage.messageDeleteError', 'error');
       }
     }
   }

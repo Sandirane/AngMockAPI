@@ -1,7 +1,6 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassDelete"
-        [alertMessage]="alertMessageDelete | transloco" />
+    <app-alert [showAlert]="showAlert()" [alertClass]="alertClass()" [alertMessage]="alertMessage() | transloco" />
 
     <h1>{{ t('projectPage.title') }}</h1>
 
@@ -11,13 +10,13 @@
 
     <br />
 
-    @if(isLoading) {
+    @if(isLoading()) {
 
     Loading...
 
     } @else {
 
-    @for (project of projects; track project.id) {
+    @for (project of projects(); track project.id) {
 
     <table>
         <tr>

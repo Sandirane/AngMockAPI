@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { Project } from '@core/models/project';
@@ -24,44 +24,18 @@ export class EditProjetComponent {
   private fb = inject(FormBuilder);
   private activatedRoute = inject(ActivatedRoute);
 
-  showAlert: boolean = false;
-  alertClassEdit: string = '';
-  alertMessageEdit: string = '';
+  showAlert = signal(false);
+  alertClass = signal('');
+  alertMessage = signal('');
 
-  private handleEditSucess() {
-
-    this.showAlert = true;
-    this.alertClassEdit = '';
-    this.alertMessageEdit = 'alertMessage.messageEditSuccess';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private handleEditError() {
-
-    this.showAlert = true;
-    this.alertClassEdit = '';
-    this.alertMessageEdit = 'alertMessage.messageEditError';
+  private showNotification(message: string, alertClass: string) {
+    this.alertMessage.set(message);
+    this.alertClass.set(alertClass);
+    this.showAlert.set(true);
 
     setTimeout(() => {
-      this.showAlert = false;
+      this.showAlert.set(false);
     }, 1000);
-
-  }
-
-  private reRequiredFields() {
-
-    this.showAlert = true;
-    this.alertClassEdit = '';
-    this.alertMessageEdit = 'alertMessage.messageRequiredFields';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
   }
 
   ngOnInit() {
@@ -89,29 +63,19 @@ export class EditProjetComponent {
   }
 
   async editSubmit() {
-
     if (this.projectFormGroup.invalid) {
-      this.reRequiredFields()
+      this.showNotification('alertMessage.messageRequiredFields', 'warring');
       return;
     }
-
     try {
-
       await firstValueFrom(this.projectsService.editProject(this.projectFormGroup.value));
-      this.handleEditSucess()
-      
+      this.showNotification('alertMessage.messageEditSuccess', 'success');
       setTimeout(() => {
         this.router.navigateByUrl(`admin/projects`);
       }, 1500);
-
     } catch (err) {
-
       console.error("Error:", err);
-      this.handleEditError()
-
+      this.showNotification('alertMessage.messageEditError', 'error');
     }
-
   }
-
-
 }

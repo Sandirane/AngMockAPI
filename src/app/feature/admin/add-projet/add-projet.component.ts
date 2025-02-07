@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ProjectsService } from '@core/services/projects.service';
@@ -20,74 +20,41 @@ export class AddProjetComponent {
   private router = inject(Router);
   private fb = inject(FormBuilder);
 
-  showAlert: boolean = false;
-  alertClassAdd: string = '';
-  alertMessageAdd: string = '';
+  showAlert = signal(false);
+  alertClass = signal('');
+  alertMessage = signal('');
 
-  private handleAddSucess() {
-    this.showAlert = true;
-    this.alertClassAdd = '';
-    this.alertMessageAdd = 'alertMessage.messageAddSuccess';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private handleAddError() {
-    this.showAlert = true;
-    this.alertClassAdd = '';
-    this.alertMessageAdd = 'alertMessage.messageAddError';
+  private showNotification(message: string, alertClass: string) {
+    this.alertMessage.set(message);
+    this.alertClass.set(alertClass);
+    this.showAlert.set(true);
 
     setTimeout(() => {
-      this.showAlert = false;
+      this.showAlert.set(false);
     }, 1000);
-
-  }
-
-  private reRequiredFields() {
-    this.showAlert = true;
-    this.alertClassAdd = '';
-    this.alertMessageAdd = 'alertMessage.messageRequiredFields';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
   }
 
   ngOnInit() {
-
     this.projectFormGroup = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required]
     });
-
   }
 
   async addSubmit() {
-
     if (this.projectFormGroup.invalid) {
-      this.reRequiredFields()
+      this.showNotification('alertMessage.messageRequiredFields', 'warring');
       return;
     }
-
     try {
       const newProject = await firstValueFrom(this.projectsService.addProject(this.projectFormGroup.value));
-      this.handleAddSucess()
-      
+      this.showNotification('alertMessage.messageAddSuccess', 'success');
       setTimeout(() => {
         this.router.navigateByUrl(`admin/projects`);
       }, 1500);
-
     } catch (err) {
-
       console.error("Error:", err);
-      this.handleAddError()
-
+      this.showNotification('alertMessage.messageAddError', 'error');
     }
-
   }
-
 }

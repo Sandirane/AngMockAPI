@@ -10,7 +10,7 @@
         "add": "Ajouter",
         "update": "Modifier",
         "cancel": "Annuler",
-        "language":"langue"
+        "language": "langue"
     },
     "alertMessage": {
         "errorEmail": "Veuillez saisir un email valide.",
@@ -66,7 +66,13 @@
         "actionButtonTitle": "Action",
         "buttonAdd": "Ajouter un projet",
         "buttonEdit": "Modifier un projet",
-        "buttondelete": "Supprimer un projet"
+        "buttondelete": "Supprimer un projet",
+        "noProject": " Pas de projects",
+        "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer ce projet ?",
+        "confirmDeleteTitle": "Confirmer la suppression",
+        "deleteCancelled": "Suppression du projet annulée.",
+        "confirmYes": "Oui",
+        "confirmNo": "Non"
     },
     "addProjectPage": {
         "title": "Ajouter un projet",
@@ -100,8 +106,10 @@
     "aboutPage": {
         "title": "A propos",
         "description1": "Framework open source, basé sur TypeScript",
-        "description2": "Bootstrap est un framework CSS open source",
-        "description3": "Ajout des paquets suivants : angular-datatables, transloco, jwt-decode"
+        "description2": "PrimeNG est une bibliothèque open-source de composants UI conçue pour Angular",
+        "description3": "MockAPI est un outil simple qui vous permet de facilement créer des API, de générer des données personnalisées et d'effectuer des opérations dessus à l'aide de l'interface RESTful.",
+        "description4": "Lien du projet ici : https://github.com/Sandirane/AngMockAPI/tree/PrimeNg",
+        "description5": "Transloco permet de définir des traductions de contenu dans différentes langues et de passer facilement de d'une langue à une autre"
     },
     "footer": {
         "footerDescription": ""

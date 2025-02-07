@@ -1,6 +1,6 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassEdit" [alertMessage]="alertMessageEdit | transloco" />
+    <app-alert [showAlert]="showAlert()" [alertClass]="alertClass()" [alertMessage]="alertMessage() | transloco" />
 
     <h1>{{ t('editProjectPage.title') }}</h1>
 
