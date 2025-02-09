@@ -1,41 +1,47 @@
 <ng-container *transloco="let t">
 
-    @if(isAuthenticated$ | async) {
+    <nav class="navbar navbar-expand-sm bg-light">
 
-    <ul>
-        @for(action of actions; track action) {
-        <li>
-            <button routerLink="{{action.route}}">
-                {{ t(action.title) }}
-            </button>
-        </li>
-        }
-        <li>
-            <button type="button" (click)="logout()">
-                {{ t('menu.logout') }}
-            </button>
-        </li>
-    </ul>
+        <div class="container-fluid">
+            @if(isAuthenticated$ | async) {
 
-    } @else {
+            <ul class="navbar-nav">
+                @for(action of actions; track action) {
+                <li class="nav-item">
+                    <button class="btn btn-outline-primary me-1" routerLink="{{action.route}}">
+                        {{ t(action.title) }}
+                    </button>
+                </li>
+                }
+                <li>
+                    <button class="btn btn-outline-danger" type="button" (click)="logout()">
+                        {{ t('menu.logout') }}
+                    </button>
+                </li>
+            </ul>
 
-    <ul>
-        <li>
-            <button type="button" routerLink="/">
-                {{ t('menu.home') }}
-            </button> 
-            <button type="button" routerLink="/auth/login">
-                {{ t('menu.login') }}
-            </button>
-        </li>
-    </ul>
+            } @else {
 
-    }
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <button class="btn btn-outline-primary me-1" type="button" routerLink="/">
+                        {{ t('menu.home') }}
+                    </button>
+                    <button class="btn btn-outline-primary" type="button" routerLink="/auth/login">
+                        {{ t('menu.login') }}
+                    </button>
+                </li>
+            </ul>
 
-    <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
-        @for (lang of availableLangs; track lang) {
-        <option [value]="lang">{{ lang }}</option>
-        }
-    </select>
+            }
 
+            <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
+                @for (lang of availableLangs; track lang) {
+                <option [value]="lang">{{ lang }}</option>
+                }
+            </select>
+
+        </div>
+
+    </nav>
 </ng-container>

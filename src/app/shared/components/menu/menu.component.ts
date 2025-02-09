@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { I18nService } from '@core/services/i18n.service';
 import { TranslocoDirective } from '@ngneat/transloco';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs'; 
 
 interface Action {
   title: string;
@@ -34,10 +34,17 @@ export class MenuComponent {
 
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$();
 
+  readonly navbarCollapsed = signal(true);
+
+  toggleNavbar(): void {
+    this.navbarCollapsed.update(isCollapsed => !isCollapsed);
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
   }
+ 
 
   availableLangs = this.i18nService.availableLangs;
   langCtrl = this.fb.control(this.i18nService.lang);
