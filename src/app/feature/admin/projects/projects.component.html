@@ -2,16 +2,24 @@
 
     <app-alert [showAlert]="showAlert()" [alertClass]="alertClass()" [alertMessage]="alertMessage() | transloco" />
 
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h1>{{ t('projectPage.title') }}</h1>
+                </div>
+                <div class="col-sm-4">
+                    <button class="btn btn-outline-primary" [routerLink]="['/admin/add-product']">
+                        <i class="fa fa-plus-square"></i>
+                        {{ t('projectPage.buttonAdd') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card shadow mb-4 ">
-
-        <h1>{{ t('projectPage.title') }}</h1>
-
-        <button class="btn btn-outline-primary" [routerLink]="['/admin/add-product']">
-            <i class="fa fa-plus-square"></i>
-            {{ t('projectPage.buttonAdd') }}
-        </button>
-
-        <br />
 
         @if(isLoading()) {
         <div class="card justify-content-center align-items-center">
@@ -22,9 +30,9 @@
 
         } @else {
 
-        <div class="container mt-3">
 
-            <table class="table table-striped">
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -56,6 +64,7 @@
                 </tbody>
             </table>
         </div>
+
         }
     </div>
 

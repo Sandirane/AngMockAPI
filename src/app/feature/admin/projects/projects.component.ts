@@ -6,10 +6,12 @@ import { ProjectsService } from '@core/services/projects.service';
 import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
 import { AlertComponent } from '@shared/components/alert/alert.component';
 import { firstValueFrom } from 'rxjs';
+import { Config } from 'datatables.net';
+import { DataTablesModule } from 'angular-datatables';
 
 @Component({
   selector: 'app-projects',
-  imports: [CommonModule, RouterLink, TranslocoDirective, TranslocoPipe, AlertComponent],
+  imports: [CommonModule, RouterLink, TranslocoDirective, TranslocoPipe, AlertComponent, DataTablesModule],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
 })
@@ -25,7 +27,8 @@ export class ProjectsComponent {
   alertClass = signal('');
   alertMessage = signal('');
 
-  maxLengthtext: number = 10; 
+  maxLengthtext: number = 10;
+  dtOptions: Config = {};
 
   private showNotification(message: string, alertClass: string) {
     this.alertMessage.set(message);
@@ -37,7 +40,17 @@ export class ProjectsComponent {
     }, 1000);
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void>  {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      lengthMenu: [5, 10, 20, 50, 100],
+      pageLength: 5,
+      // order:[1,'asc']
+      scrollY: '300',
+      language: {
+        searchPlaceholder: ''
+      }
+    };
     try {
       const data = await firstValueFrom(this.projectsService.getAllProjects());
       setTimeout(() => {
@@ -57,6 +70,7 @@ export class ProjectsComponent {
         const updatedProjects = this.projects().filter(project => project.id !== this.selectedProjectId);
         this.projects.set(updatedProjects);
         this.showNotification('alertMessage.messageDeleteSuccess', 'success');
+        
       } catch (err) {
         console.error("Error deleting project:", err);
         this.showNotification('alertMessage.messageDeleteError', 'error');
