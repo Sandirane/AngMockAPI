@@ -25,6 +25,8 @@ export class ProjectsComponent {
   alertClass = signal('');
   alertMessage = signal('');
 
+  maxLengthtext: number = 10; 
+
   private showNotification(message: string, alertClass: string) {
     this.alertMessage.set(message);
     this.alertClass.set(alertClass);

@@ -27,7 +27,7 @@ export class EditProjetComponent {
   showAlert = signal(false);
   alertClassEdit = signal('');
   alertMessageEdit = signal('');
-
+ 
   private showNotification(type: 'success' | 'error' | 'warring') {
     const messages = {
       success: { class: 'alert alert-success', message: 'alertMessage.messageEditSuccess' }, 

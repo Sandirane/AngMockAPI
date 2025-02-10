@@ -38,7 +38,7 @@
                     <tr>
                         <td>{{ project.id }}</td>
                         <td>{{ project.name }}</td>
-                        <td>{{ project.description }}</td>
+                        <td>{{ project.description | slice:0:maxLengthtext }}...</td>
                         <td>
                             <button class="btn btn-outline-warning me-3" [routerLink]="['/admin/project', project.id]">
                                 <i class="fas fa-edit"></i>
