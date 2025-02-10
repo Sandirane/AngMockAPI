@@ -1,8 +1,17 @@
 <ng-container *transloco="let t">
-    <h2>
-        <span>{{ t('notAuthorizedPage.notAuthorizedTitle') }}</span>
-    </h2>
-    <button type="button" [routerLink]="['/']">
-        {{ t('notAuthorizedPage.buttonBack') }}
-    </button>
+
+    <div class="container mt-3">
+
+        <div class="mt-4 p-5 alert alert-danger text-black ">
+            <h2>
+                <span>{{ t('notAuthorizedPage.notAuthorizedTitle') }}</span>
+            </h2>
+            <br/> 
+            <button class="btn btn-outline-secondary" type="button" [routerLink]="['/']">
+                {{ t('notAuthorizedPage.buttonBack') }}
+            </button>
+        </div>
+
+    </div>
+
 </ng-container>

@@ -2,52 +2,61 @@
 
     <app-alert [showAlert]="showAlert()" [alertClass]="alertClass()" [alertMessage]="alertMessage() | transloco" />
 
-    <h1>{{ t('projectPage.title') }}</h1>
+    <div class="card shadow mb-4 ">
 
-    <button class="btn btn-outline-primary" [routerLink]="['/admin/add-product']">
-        <i class="fa fa-plus-square"></i>
-        {{ t('projectPage.buttonAdd') }}
-    </button>
+        <h1>{{ t('projectPage.title') }}</h1>
 
-    <br />
+        <button class="btn btn-outline-primary" [routerLink]="['/admin/add-product']">
+            <i class="fa fa-plus-square"></i>
+            {{ t('projectPage.buttonAdd') }}
+        </button>
 
-    @if(isLoading()) {
-    <div class="card justify-content-center align-items-center">
-        <div class="card-body">
-            <div class="spinner-grow text-secondary"></div>
+        <br />
+
+        @if(isLoading()) {
+        <div class="card justify-content-center align-items-center">
+            <div class="card-body">
+                <div class="spinner-grow text-secondary"></div>
+            </div>
         </div>
+
+        } @else {
+
+        <div class="container mt-3">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>{{ t('projectPage.nameProject') }}</th>
+                        <th>{{ t('projectPage.descriptionProject') }}</th>
+                        <th>{{ t('projectPage.actionButtonTitle') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (project of projects(); track project.id) {
+                    <tr>
+                        <td>{{ project.id }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.description }}</td>
+                        <td>
+                            <button class="btn btn-outline-warning me-3" [routerLink]="['/admin/project', project.id]">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" (click)="deleteSubmit(project.id)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    } @empty {
+                    <tr>
+                        <td>{{ t('projectPage.noProject') }}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
     </div>
 
-    } @else {
-
-    <div class="container mt-3">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>{{ t('projectPage.nameProject') }}</th>
-                    <th>{{ t('projectPage.descriptionProject') }}</th>
-                    <th>{{ t('projectPage.actionButtonTitle') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (project of projects(); track project.id) {
-                <tr>
-                    <td>{{ project.id }}</td>
-                    <td>{{ project.name }}</td>
-                    <td>{{ project.description }}</td>
-                    <td>
-                        <button class="btn btn-outline-warning me-3" [routerLink]="['/admin/project', project.id]">
-                            <i class="fas fa-edit"></i>
-                        </button> 
-                        <button class="btn btn-outline-danger" (click)="deleteSubmit(project.id)">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    }
 </ng-container>
