@@ -1,10 +1,11 @@
 <div class="d-flex flex-column min-vh-100">
-    <app-menu />
-    <!--
+    <app-menu /> 
     @if(showAlert) {
-    <p>Http Error Response : {{message}}</p>
-    }
-    -->
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Http Error Response : </strong>{{message}}
+      </div> 
+    } 
     <div class="flex-grow-1 d-flex justify-content-center align-items-center">
         <router-outlet />
     </div>

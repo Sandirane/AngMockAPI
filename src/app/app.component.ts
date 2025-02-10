@@ -24,9 +24,11 @@ export class AppComponent {
     this.apiErrorService.apiError
       .subscribe(
         data => {
-          alert(this.message = data)
-          // this.message = data
-          //this.showAlert = true
+          this.message = data
+          this.showAlert = true
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 1000);
         }
       )
   }

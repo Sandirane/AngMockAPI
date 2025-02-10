@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthResponse } from '@core/models/users';
 import { AuthService } from '@core/services/auth.service';
@@ -20,41 +20,28 @@ export class RegisterComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  showAlert: boolean = false;
-  alertClassRegister: string = '';
-  alertMessageRegister: string = '';
+  showAlert = signal(false);
+  alertClassRegister = signal('');
+  alertMessageRegister = signal('');
 
-  private handleRegisterSucess() {
-    this.alertClassRegister = '';
-    this.alertMessageRegister = 'alertMessage.registerSuccess';
-    this.showAlert = true;
+  private showNotification(type: 'success' | 'error' | 'warning') {
+    const messages = {
+      success: { class: 'alert alert-success', message: 'alertMessage.registerSuccess' },
+      warning: { class: 'alert alert-danger', message: 'alertMessage.errorCredentials' },
+      error: { class: 'alert alert-danger', message: 'alertMessage.registerError' },
+    };
 
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
+    this.alertClassRegister.set(messages[type].class);
+    this.alertMessageRegister.set(messages[type].message);
+    this.showAlert.set(true);
 
+    setTimeout(() => this.showAlert.set(false), 1000);
   }
 
-  private handleRegisterError() {
-    this.alertClassRegister = '';
-    this.alertMessageRegister = 'alertMessage.registerError';
-    this.showAlert = true;
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
-  }
-
-  private reRequiredFields() {
-    this.alertClassRegister = '';
-    this.alertMessageRegister = 'alertMessage.errorCredentials';
-    this.showAlert = true;
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
+  private passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordsMismatch: true };
   }
 
   registerForm: FormGroup = this.fb.group({
@@ -62,7 +49,7 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', Validators.required]
-  });
+  }, { validators: this.passwordsMatchValidator });
 
   async onSubmit() {
     if (this.registerForm.valid) {
@@ -76,21 +63,21 @@ export class RegisterComponent {
 
           localStorage.setItem('token', response.token);
 
-          this.handleRegisterSucess()
+          this.showNotification('success');
 
           setTimeout(() => {
             this.router.navigate(['/auth/login']);
           }, 1500);
 
         } catch (error) {
-          this.handleRegisterError()
+          this.showNotification('error');
         }
       } else {
-        this.handleRegisterError()
+        this.showNotification('error');
       }
 
     } else {
-      this.reRequiredFields()
+      this.showNotification('warning');
     }
 
   }

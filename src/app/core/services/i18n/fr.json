@@ -21,6 +21,9 @@
         "loginError": "Erreur de connexion.",
         "registerSuccess": "Enregistrement avec succès.",
         "registerError": "Erreur d'enregistrement.",
+        "registerNameRequired": "Le nom est obligatoire.",
+        "registerEmailRequired": "Veuillez saisir une adresse e-mail valide.",
+        "registerConfirmPasswordRequired": "Un mot de passe de confirmation est requis.",
         "messageDeleteSuccess": "Projet supprimé avec succès !",
         "messageDeleteError": "Échec de la suppression du projet. Veuillez réessayer.",
         "messageAddSuccess": "Projet ajouter avec succès !",
@@ -36,10 +39,7 @@
         "buttonValidation": "Connexion",
         "buttonBack": "Revenir à la page d'acceuil",
         "backRegister": "Vous n'avez pas de compte ?",
-        "buttonRegister": "Créer un compte",
-        "registerNameRequired": "Le nom est obligatoire.",
-        "registerEmailRequired": "Veuillez saisir une adresse e-mail valide.",
-        "registerConfirmPasswordRequired": "Un mot de passe de confirmation est requis."
+        "buttonRegister": "Créer un compte"
     },
     "registerPage": {
         "name": "Nom",

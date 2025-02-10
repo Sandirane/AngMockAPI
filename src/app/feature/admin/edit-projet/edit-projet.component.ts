@@ -25,17 +25,21 @@ export class EditProjetComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   showAlert = signal(false);
-  alertClass = signal('');
-  alertMessage = signal('');
+  alertClassEdit = signal('');
+  alertMessageEdit = signal('');
 
-  private showNotification(message: string, alertClass: string) {
-    this.alertMessage.set(message);
-    this.alertClass.set(alertClass);
+  private showNotification(type: 'success' | 'error' | 'warring') {
+    const messages = {
+      success: { class: 'alert alert-success', message: 'alertMessage.messageEditSuccess' }, 
+      warring: { class: 'alert alert-danger', message: 'alertMessage.messageRequiredFields' },
+      error: { class: 'alert alert-danger', message: 'alertMessage.messageEditError' },
+    };
+
+    this.alertClassEdit.set(messages[type].class);
+    this.alertMessageEdit.set(messages[type].message);
     this.showAlert.set(true);
 
-    setTimeout(() => {
-      this.showAlert.set(false);
-    }, 1000);
+    setTimeout(() => this.showAlert.set(false), 1000);
   }
 
   ngOnInit() {
@@ -64,18 +68,18 @@ export class EditProjetComponent {
 
   async editSubmit() {
     if (this.projectFormGroup.invalid) {
-      this.showNotification('alertMessage.messageRequiredFields', 'warring');
+      this.showNotification('warring');
       return;
     }
     try {
       await firstValueFrom(this.projectsService.editProject(this.projectFormGroup.value));
-      this.showNotification('alertMessage.messageEditSuccess', 'success');
+      this.showNotification('success');
       setTimeout(() => {
         this.router.navigateByUrl(`admin/projects`);
       }, 1500);
     } catch (err) {
       console.error("Error:", err);
-      this.showNotification('alertMessage.messageEditError', 'error');
+      this.showNotification('error');
     }
   }
 }

@@ -21,17 +21,21 @@ export class AddProjetComponent {
   private fb = inject(FormBuilder);
 
   showAlert = signal(false);
-  alertClass = signal('');
-  alertMessage = signal('');
+  alertClassAdd = signal('');
+  alertMessageAdd = signal('');
 
-  private showNotification(message: string, alertClass: string) {
-    this.alertMessage.set(message);
-    this.alertClass.set(alertClass);
+  private showNotification(type: 'success' | 'error' | 'warring') {
+    const messages = {
+      success: { class: 'alert alert-success', message: 'alertMessage.messageAddSuccess' },
+      warring: { class: 'alert alert-danger', message: 'alertMessage.messageRequiredFields' },
+      error: { class: 'alert alert-danger', message: 'alertMessage.messageAddError' },
+    };
+
+    this.alertClassAdd.set(messages[type].class);
+    this.alertMessageAdd.set(messages[type].message);
     this.showAlert.set(true);
 
-    setTimeout(() => {
-      this.showAlert.set(false);
-    }, 1000);
+    setTimeout(() => this.showAlert.set(false), 1000);
   }
 
   ngOnInit() {
@@ -43,18 +47,18 @@ export class AddProjetComponent {
 
   async addSubmit() {
     if (this.projectFormGroup.invalid) {
-      this.showNotification('alertMessage.messageRequiredFields', 'warring');
+      this.showNotification('warring');
       return;
     }
     try {
       const newProject = await firstValueFrom(this.projectsService.addProject(this.projectFormGroup.value));
-      this.showNotification('alertMessage.messageAddSuccess', 'success');
+      this.showNotification('success');
       setTimeout(() => {
         this.router.navigateByUrl(`admin/projects`);
       }, 1500);
     } catch (err) {
       console.error("Error:", err);
-      this.showNotification('alertMessage.messageAddError', 'error');
+      this.showNotification('error');
     }
   }
 }

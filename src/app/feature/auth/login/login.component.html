@@ -1,32 +1,62 @@
 <ng-container *transloco="let t">
 
-    <app-alert [showAlert]="showAlert" [alertClass]="alertClassLogin" [alertMessage]="alertMessageLogin | transloco" />
+    <app-alert [showAlert]="showAlert()" [alertClass]="alertClassLogin()"
+        [alertMessage]="alertMessageLogin() | transloco" />
 
-    <p>{{ t('loginPage.title') }}</p>
+    <div class="container mt-3">
+        <div class="login-box p-4 border bg-white w-100">
+            <h2>{{ t('loginPage.title') }}</h2>
 
-    <p>Email : fake&#64;gmail.com</p>
-    <p> Password : azertyuiop</p>
+            <div class="descriptive-box p-4 w-100">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>fake&#64;gmail.com</td>
+                            <td>azertyuiop</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <label for="email">{{ t('loginPage.email') }}</label><br />
-        <input formControlName="email" type="email" id="email" /><br /><br />
+            </div>
 
-        @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched){
-        <p> {{ t('alertMessage.errorEmail') }} </p>
-        }
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-        <label for="password">{{ t('loginPage.password') }}</label><br />
-        <input formControlName="password" type="password" id="password" /><br /><br />
+                <input type="email" class="form-control mt-3" id="email" placeholder="{{ t('loginPage.email') }}"
+                    formControlName="email">
 
-        @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched){
-        <p> {{ t('alertMessage.errorCharacters') }} </p>
-        }
+                @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched){
+                <div class="alert alert-danger">
+                    {{ t('alertMessage.errorEmail') }}
+                </div>
+                }
 
-        <button type="submit" [disabled]="loginForm.invalid">
-            {{ t('loginPage.buttonValidation') }}
-        </button><br />
-        <p>{{ t('loginPage.backRegister') }} <a routerLink="/auth/register">{{ t('loginPage.buttonRegister') }}</a></p>
+                <input type="password" class="form-control  mt-3" id="password"
+                    placeholder="{{ t('loginPage.password') }}" formControlName="password">
 
-    </form>
- 
+                @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched){<div
+                    class="alert alert-danger">
+                    {{ t('alertMessage.errorCharacters') }}
+                </div>
+                }
+
+                <button class="btn btn-primary w-100 mt-3" type="submit" [disabled]="loginForm.invalid">
+                    {{ t('loginPage.buttonValidation') }}
+                </button>
+                <br />
+                <p>
+                    {{ t('loginPage.backRegister') }}
+                    <a routerLink="/auth/register">{{ t('loginPage.buttonRegister') }}</a>
+                </p>
+
+            </form>
+
+        </div>
+    </div>
+
 </ng-container>

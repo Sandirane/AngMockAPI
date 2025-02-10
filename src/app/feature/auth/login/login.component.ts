@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthResponse } from '@core/models/users';
@@ -19,42 +19,22 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  showAlert: boolean = false;
-  alertClassLogin: string = '';
-  alertMessageLogin: string = '';
+  showAlert = signal(false);
+  alertClassLogin = signal('');
+  alertMessageLogin = signal('');
 
-  private handleLoginSucess() {
+  private showNotification(type: 'success' | 'error' | 'credentials') {
+    const messages = {
+      success: { class: 'alert alert-success', message: 'alertMessage.loginSuccess' },
+      error: { class: 'alert alert-danger', message: 'alertMessage.loginError' },
+      credentials: { class: 'alert alert-danger', message: 'alertMessage.errorCredentials' },
+    };
 
-    this.showAlert = true;
-    this.alertClassLogin = '';
-    this.alertMessageLogin = 'alertMessage.loginSuccess';
+    this.alertClassLogin.set(messages[type].class);
+    this.alertMessageLogin.set(messages[type].message);
+    this.showAlert.set(true);
 
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-  }
-
-  private handleLoginError() {
-
-    this.showAlert = true;
-    this.alertClassLogin = '';
-    this.alertMessageLogin = 'alertMessage.loginError';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-  }
-
-  private reRequiredFields() {
-
-    this.showAlert = true;
-    this.alertClassLogin = '';
-    this.alertMessageLogin = 'alertMessage.errorCredentials';
-
-    setTimeout(() => {
-      this.showAlert = false;
-    }, 1000);
-
+    setTimeout(() => this.showAlert.set(false), 1000);
   }
 
   loginForm: FormGroup = this.fb.group({
@@ -68,30 +48,30 @@ export class LoginComponent {
     if (this.loginForm.valid) {
 
       const { email, password } = this.loginForm.value;
-      
+
       try {
-      
+
         const response: AuthResponse | undefined = await this.authService.login(email, password).toPromise();
-      
+
         if (response) {
 
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
 
-          this.handleLoginSucess()
+          this.showNotification('success');
 
           setTimeout(() => {
             this.router.navigateByUrl('admin/projects');
           }, 1500);
 
         } else {
-          this.handleLoginError()
+          this.showNotification('error');
         }
       } catch (error) {
-        this.handleLoginError()
+        this.showNotification('error');
       }
     } else {
-      this.reRequiredFields()
+      this.showNotification('credentials');
     }
   }
 

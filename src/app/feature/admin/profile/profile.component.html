@@ -1,10 +1,16 @@
 <ng-container *transloco="let t">
-    <h1>{{ t('profilePage.title') }}</h1>
 
-    @if(user) {
+    <div class="container mt-3">
+        <div class="mt-4 p-5 bg-light text-dark rounded">
+            <h1>{{ t('profilePage.title') }}</h1>
 
-    <h5>{{ t('profilePage.profilName') }} : {{ user.name }}</h5>
-    <span>{{ t('profilePage.profilEmail') }}  : {{ user.email }}</span>
+            @if(user) {
 
-    }
+            <h5>{{ t('profilePage.profilName') }} : {{ user.name }}</h5>
+            <span>{{ t('profilePage.profilEmail') }} : {{ user.email }}</span>
+
+            }
+        </div>
+    </div> 
+
 </ng-container>

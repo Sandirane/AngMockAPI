@@ -34,7 +34,7 @@ export class MenuComponent {
 
   isAuthenticated$: Observable<boolean> = this.authService.isAuthenticated$();
 
-  readonly navbarCollapsed = signal(true);
+  readonly navbarCollapsed = signal(false);
 
   toggleNavbar(): void {
     this.navbarCollapsed.update(isCollapsed => !isCollapsed);
