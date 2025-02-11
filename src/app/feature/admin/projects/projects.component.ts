@@ -30,17 +30,26 @@ export class ProjectsComponent {
   maxLengthtext: number = 10;
   dtOptions: Config = {};
 
-  private showNotification(message: string, alertClass: string) {
-    this.alertMessage.set(message);
-    this.alertClass.set(alertClass);
+  private showNotification(type: 'success' | 'error') {
+    const messages = {
+      success: {
+        class: 'alert alert-success',
+        message: 'alertMessage.messageDeleteSuccess'
+      },
+      error: {
+        class: 'alert alert-danger',
+        message: 'alertMessage.messageDeleteError'
+      },
+    };
+
+    this.alertClass.set(messages[type].class);
+    this.alertMessage.set(messages[type].message);
     this.showAlert.set(true);
 
-    setTimeout(() => {
-      this.showAlert.set(false);
-    }, 1000);
+    setTimeout(() => this.showAlert.set(false), 1000);
   }
 
-  async ngOnInit(): Promise<void>  {
+  async ngOnInit(): Promise<void> {
     this.dtOptions = {
       pagingType: 'full_numbers',
       lengthMenu: [5, 10, 20, 50, 100],
@@ -69,11 +78,11 @@ export class ProjectsComponent {
         await firstValueFrom(this.projectsService.deleteProject(this.selectedProjectId));
         const updatedProjects = this.projects().filter(project => project.id !== this.selectedProjectId);
         this.projects.set(updatedProjects);
-        this.showNotification('alertMessage.messageDeleteSuccess', 'success');
-        
+        this.showNotification('success');
+
       } catch (err) {
         console.error("Error deleting project:", err);
-        this.showNotification('alertMessage.messageDeleteError', 'error');
+        this.showNotification('error');
       }
     }
   }

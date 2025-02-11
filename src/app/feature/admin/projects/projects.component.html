@@ -1,8 +1,7 @@
 <ng-container *transloco="let t">
 
     <app-alert [showAlert]="showAlert()" [alertClass]="alertClass()" [alertMessage]="alertMessage() | transloco" />
-
-
+ 
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -51,9 +50,39 @@
                             <button class="btn btn-outline-warning me-3" [routerLink]="['/admin/project', project.id]">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-outline-danger" (click)="deleteSubmit(project.id)">
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                [attr.data-bs-target]="'#modal-' + project.id">
                                 <i class="fa fa-trash"></i>
                             </button>
+
+                            <div class="modal" [attr.id]="'modal-' + project.id">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">{{ t('projectPage.confirmDeleteTitle') }} : {{
+                                                project.name }}</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            {{ t('projectPage.confirmDeleteMessage') }}<strong> {{ project.name }} </strong>?
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-primary"
+                                                data-bs-dismiss="modal">
+                                                {{ t('projectPage.confirmNo') }}
+                                            </button>
+
+                                            <button class="btn btn-outline-danger" (click)="deleteSubmit(project.id)"
+                                                data-bs-dismiss="modal">
+                                                {{ t('projectPage.confirmYes') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     } @empty {

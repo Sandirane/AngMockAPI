@@ -1,15 +1,15 @@
 <ng-container *transloco="let t">
-
     <nav class="navbar navbar-expand-sm bg-light">
 
-        <div class="navbar-collapse collapse" [class.show]="navbarCollapsed()" id="collapsibleNavbar">
- 
+        <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="navbar-collapse collapse" [class.show]="navbarCollapsed()" id="collapsibleNavbar">
             <div class="container-fluid">
                 @if(isAuthenticated$ | async) {
-
                 <ul class="navbar-nav">
-                    @for(action of actions; track action) {
+                    @for(action of actionsConnect; track action) {
                     <li class="nav-item">
                         <button class="btn btn-outline-primary me-1" routerLink="{{action.route}}">
                             {{ t(action.title) }}
@@ -24,21 +24,18 @@
                 </ul>
 
                 } @else {
+
                 <ul class="navbar-nav">
+                    @for(action of actionsNotConnect; track action) {
                     <li class="nav-item">
-                        <button class="btn btn-outline-primary me-1" type="button" routerLink="/">
-                            {{ t('menu.home') }}
-                        </button>
-                        <button class="btn btn-outline-primary" type="button" routerLink="/auth/login">
-                            {{ t('menu.login') }}
+                        <button class="btn btn-outline-primary me-1" routerLink="{{action.route}}">
+                            {{ t(action.title) }}
                         </button>
                     </li>
+                    }
                 </ul>
-
                 }
-
             </div>
-
         </div>
 
         <select [formControl]="langCtrl" [attr.aria-label]="t('menu.language')">
@@ -47,8 +44,5 @@
             }
         </select>
 
-        <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
     </nav>
 </ng-container>

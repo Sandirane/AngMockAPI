@@ -1,27 +1,28 @@
 <ng-container *transloco="let t">
 
     <div class="container-fluid text-center mt-3">
-
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <h2>{{ t('profilePage.title') }}</h2>
+                    <h2>{{ t('aboutPage.title') }}</h2>
                 </div>
             </div>
         </div>
+
         <div class="card">
             <div class="card-body">
                 <div class="row">
 
-                    @if(user) {
-                    <h5>{{ t('profilePage.profilName') }} : {{ user.name }}</h5>
-                    <span>{{ t('profilePage.profilEmail') }} : {{ user.email }}</span>
+                    @for(item of items; track item) {
+                    <div class="col-sm-4 ">
+                        <h1><i class='{{ item.icon }}'></i></h1>
+                        <p>{{ t(item.description) }}</p>
+                    </div>
                     }
 
                 </div>
             </div>
         </div>
-
     </div>
 
 </ng-container>
