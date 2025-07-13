@@ -22,6 +22,7 @@ It includes features such as user authentication, CRUD project management, and i
 - [Transloco](https://ngneat.github.io/transloco/) 
 
 ## Folder Structure
+```txt
 angmockapi/
 ├──src/
 	├── index.html
@@ -44,6 +45,10 @@ angmockapi/
 		│   └── pagenotfound/
 		└── shared/
 			└── components/
+
+```
+
+---
 
 ## Setup Instructions
 
