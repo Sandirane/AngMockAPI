@@ -5,6 +5,10 @@
 **AngMockAPI** is an Angular 19 project that interacts with a RESTful API ([Mock API](https://mock-api.binaryboxtuts.com/)) to manage projects.  
 It includes features such as user authentication, CRUD project management, and internationalization (i18n) using Transloco with English and French support. The UI is built with PrimeNG.
 
+## Demo Application
+
+[https://angmockapi.web.app/home](https://angmockapi.web.app/home)
+
 ## Features
 
 - **Authentication:** User registration and login using JWT-based authentication.
@@ -65,10 +69,6 @@ angmockapi/
 
 This app uses a third-party mock RESTful API:  
 [https://mock-api.binaryboxtuts.com](https://mock-api.binaryboxtuts.com)
-
-## Demo Application
-
-[https://angmockapi.web.app/home](https://angmockapi.web.app/home)
 
 ## 🧑‍💻 Author
 
